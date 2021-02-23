@@ -11,4 +11,4 @@
 * Anna-Kay Graham
 * Samara Soares
 * Afridi Johnson
-* Brandon
+* Brandon Shäfer

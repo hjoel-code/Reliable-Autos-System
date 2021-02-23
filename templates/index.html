@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Reliable Autos</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/watchlist.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container-fluid p-0">
+            <nav class="navbar main navbar-expand-md nav-menu">
+                <a class="navbar-brand" href="/">Reliable Autos</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-menu" aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle navigation">
+                  <span><i class="fa fa-bars text-light"></i></span>
+                </button>
+              
+                <div class="collapse navbar-collapse" id="nav-menu">
+                  <ul class="navbar-nav m-auto">
+                    <li class="nav-item active">
+                      <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/admin">Admin</a>
+                    </li>
+                  </ul>
+                </div>
+            </nav>
+        </div>
+        
+    </header>
+
+    <section class="header-bg"></section>
+    <section class="header-bg-1"></section>
+
+    <main>
+        <div class="container inventory-header">
+            <h6>Inventory</h6>
+        </div>
+        
+
+        <div>
+            <section class="section-1 my-2 mx-md-5 mx-sm-0">
+                <div class="filter-head" data-toggle="collapse" data-target="#search-form">
+                    <h6 class="d-flex pt-2"><span><i class="fas fa-search mx-2"></i></span> Filter Inventory <div class="ml-auto"><i class="fa fa-chevron-down"></i></div></h6>
+                </div>
+                <form action="{{ url_for('filterInventory') }}" method="GET" class="collapse" id="search-form">
+                    <nav class="navbar filter navbar-expand-lg">
+    
+                        <div class="row no-gutters filter justify-content-center">
+                            <div class="col-6 px-1">
+                                <label class="filter-label"><small>Make</small></label>
+                                <select name="make" class="form-control" id="search-make" style="margin: 5px;">
+                                    <option>any</option>
+                                    <option value="Toyota">Toyota</option>
+                                    <option value="Nissan">Nissan</option>
+                                    <option value="Suzuki">Suzuki</option>
+                                    <option value="Hyundai">Hyundai</option>
+                                    <option value="Subaru">Subaru</option>
+                                </select>
+                            </div>
+                            <div class="col-6 px-1">
+                                <label class="filter-label"><small>Model</small></label>
+                                <select name="model" class="form-control" id="search-model" style="margin: 5px;">
+                                    <option>any</option>
+                                </select>
+                            </div>
+                        </div>
+    
+                        <div class="collapse navbar-collapse" id="filterOptions">
+                            <div class="row no-gutters filter">
+                                <div class="col-6 px-1">
+                                    <label class="filter-label"><small>Type</small></label>
+                                    <select name="bType" class="form-control" id="search-body-style" style="margin: 5px;">
+                                        <option>any</option>
+                                    </select>
+                                </div>
+                                <div class="col-6 px-1">
+                                    <label class="filter-label"><small>Transmission</small></label>
+                                    <select name="trans" class="form-control" id="search-transmission" style="margin: 5px;">
+                                        <option>any</option>
+                                        <option value="Automatic">Automatic</option>
+                                        <option value="Manual">Manual</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row no-gutters filter">
+                                <div class="col-6 px-1">
+                                    <label class="filter-label"><small>From Year</small></label>
+                                    <select name="yearMin" class="form-control" id="search-year-min" style="margin: 5px;">
+                                        <option value="0">any</option>
+                                    </select>
+                                </div>
+                                <div class="col-6 px-1">
+                                    <label class="filter-label"><small>To Year</small></label>
+                                    <select name="yearMax" class="form-control" id="search-year-max" style="margin: 5px;">
+                                        <option value="99999">any</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <button class="navbar-toggler filter-btn mt-4" type="button" data-toggle="collapse" data-target="#filterOptions">
+                            <span><i class="fa fa-filter"></i></span>More Filters
+                        </button>
+                    </nav>
+    
+                    <div class="btn-group btn-block filter-btn-group">
+                        <button type="reset" class="btn btn-light">Reset All</button>
+                        <button class="btn btn-info" id="search-inventory-btn" type="submit">Search</button>
+                    </div>
+                </form>
+                <div class="filter-head head-1">
+                    {% if count > 0 %}
+                    <h6 class="pt-2 cars">{{ count }} Vehicles</h6>
+                    {% else %}
+                    <h6 class="pt-2 no-cars"><span><i class="fas fa-heart-broken mx-2 text-danger"></i></span>No Vehicles </h6>
+                    {% endif %}
+                </div>
+            </section>
+
+
+            <div class="divider-line mt-5"></div>
+            {% if count > 0 %}
+            <section class="section-2">
+                <div class="listing-container container">
+                    <div class="row no-gutters align-items-start" id="listings">
+                        {% for vehicle in inventory%}
+                        <div class="col-lg-4 col-md-4 col-sm-6">
+                            <div class="car-card-watch">
+                                <div class="card-details">
+                                    <a href="/inventory/vehicle/{{vehicle.getID()}}">
+                                        <div class="d-flex">
+                                            <h6 class="title-head">{{vehicle.make}} {{ vehicle.model }}<div>{{vehicle.year}}</div></h6>
+                                        </div>
+                                    </a>
+                                    <div class="price-container">{{vehicle.getPrice()}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+            {% else %}
+            <section class="mx-md-5 mx-sm-1 section-4">
+                <section class="no-vehicles">
+                    <span><i class="fa fa-heart-broken"></i></span>
+                    <h6>Inventory Empty</h6>
+                </section>
+            </section>
+            {% endif %}
+        </div>
+    </main>
+
+    {% if error %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        Something went wrong
+        <button type="button" class="close ml-3" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+
+
+
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.js"></script>
+
+    <script src="{{ url_for('static',filename='js/main.js') }}"></script>
+</body>
+
+
+
+
+</html>

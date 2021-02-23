@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reliable Autos</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+</head>
+<body>
+    <div class="main-bg"></div>
+    <div class="container-fluid">
+        <a class="btn back-btn mr-auto" href="{{ url_for('login') }}">
+            <span><i class="fa fa-sign-out"></i></span> Sign Out
+        </a>
+        <div class="login-column">
+            <div class="login-mod">
+                <div class="main-head">
+                    Reliable Autos Administrator Menu
+                </div>
+                <div class="menu">
+                    <div class="menu-head">Hello {{ name }}</div>
+                    <div class="menu-body"> <div class="text-success">{{ success }}</div> 
+                        <div class="menu-item menu-dropdown" data-toggle="collapse" data-target="#updates-menu"> Update Inventory
+                            <div class="dropdown-menu-ra collapse pt-2" id="updates-menu">
+                                <a href="{{ url_for('addVehicle') }}" class="menu-item drop">Add to Inventory</a>
+                                <a href="{{ url_for('removeInventory') }}" class="menu-item drop">Remove from Inventory</a>
+                                <a href="{{ url_for('updateInventory') }}"  class="menu-item drop">Edit Vehicle Information</a>
+                            </div>
+                        </div>
+                        <a href="{{ url_for('inventory') }}" class="menu-item">View Inventory</a>
+                        <a href="#" class="menu-item">Record Transaction</a>
+                        <a href="{{ url_for('signUp') }}" class="menu-item">Add Administrator</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    
+</body>
+</html>

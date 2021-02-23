@@ -16,8 +16,8 @@ class CustomerUI:
         None if trans=="" else self.inventory.addFilter("trans","==",trans)
         None if bType=="" else self.inventory.addFilter("bodyType","==",bType)
 
-        self.inventory.addFilter("year",">=",int(minYear))
-        self.inventory.addFilter("year","<=",int(maxYear))
+        self.inventory.addFilter("year",">=",minYear)
+        self.inventory.addFilter("year","<=",maxYear)
         
         return self.inventory.getQuerriedInventory()
         

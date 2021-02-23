@@ -1,0 +1,194 @@
+@import "https://fonts.googleapis.com/css?family=Roboto|Roboto Condensed|Roboto Mono|Fira Sans|Nunito|Didact Gothic";
+:root {
+    --auto-white: #fdfcfa;
+    --auto-ivory-white: #e8ebe0;
+    --auto-dark-blue: #236B8E;
+    --auto-blue: #33A1DE;
+    --auto-red: #da313f;
+    --auto-yellow: #f0e130;
+    --auto-dark: #666666;
+    --auto-black: #2b2b2b;
+}
+
+body {
+    font-family: roboto;
+}
+
+.login-column {
+    height: 93vh;
+    width: 100%;
+    padding: 0 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.input-group {
+    padding: auto 18%;
+}
+
+input.form-control[type=email],
+input.form-control[type=password],
+input.form-control[type=text] {
+    font-weight: 300;
+    color: rgb(83, 83, 83);
+    font-family: fira sans;
+    font-size: 14px;
+}
+
+input.form-control::placeholder {
+    font-weight: 500;
+    font-size: 14px;
+    color: rgb(216, 216, 216);
+}
+
+.form-control {
+    border-radius: 0;
+    padding: 20px 8px;
+}
+
+.form-control:focus,
+.form-control:active {
+    box-shadow: none;
+    z-index: 100;
+    border: 2px solid var(--auto-black);
+}
+
+.btn-login {
+    margin: 20px auto 0;
+    width: 80%;
+    padding: 8px 20px;
+    background: var(--auto-red);
+    color: var(--auto-ivory-white);
+    border: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: fira sans;
+    font-size: 14px;
+    display: block;
+    transition: .5s;
+}
+
+.btn-login:focus {
+    box-shadow: none;
+}
+
+.btn-login:hover,
+.btn-login:active {
+    background: var(--auto-black);
+    color: var(--auto-white);
+    box-shadow: none;
+}
+
+.login-head {
+    margin: 0 0 20px 0;
+    font-family: roboto;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--auto-dark);
+    font-weight: 600;
+}
+
+.make-visible {
+    border: none;
+    transition: transform .5s;
+}
+
+.make-visible:active {
+    transform: scale(1.3);
+}
+
+.make-visible:hover,
+.make-visible:active,
+.make-visible:focus {
+    box-shadow: none;
+    border: none;
+}
+
+.login-mod {
+    display: block;
+}
+
+.signup-btn {
+    display: flex;
+    justify-content: center;
+}
+
+.google-btn {
+    font-size: 14px;
+    display: block;
+    padding: 8px 3px;
+    margin: 0 auto 20px auto;
+    border: none;
+    transition: .5s;
+    color: var(--auto-blue);
+    text-transform: uppercase;
+}
+
+.google-btn:hover,
+.google-btn:focus,
+.google-btn:active {
+    box-shadow: none;
+    color: var(--auto-dark-blue);
+}
+
+.signup-btn {
+    color: var(--auto-blue);
+    text-transform: uppercase;
+    transition: .5s;
+    border: none;
+    font-family: fira sans;
+    font-size: 16px;
+}
+
+.signup-btn:hover,
+.signup-btn:focus,
+.signup-btn:active {
+    color: var(--auto-dark-blue);
+    box-shadow: none;
+    border: none;
+}
+
+.logo-container {
+    display: block;
+    width: 100%;
+    height: 10vh;
+    margin-bottom: 3vh;
+}
+
+.logo-container img {
+    display: block;
+    height: 100%;
+    margin: auto auto 0;
+    padding: 0;
+}
+
+.img-col {
+    background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .9)), url(https://images.unsplash.com/photo-1564435148079-9933cfd96b6a?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80);
+    height: 100vh;
+    width: 100%;
+    background-position: fixed;
+    background-size: cover;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.048), 0 6px 20px 0 rgba(0, 0, 0, 0.247);
+}
+
+.img-col img {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.main-col {
+    height: 100vh;
+    width: 100%;
+}
+
+.is-invalid {
+    border: 1px solid var(--auto-red);
+    z-index: 100;
+    display: flex;
+    box-shadow: none !important;
+}

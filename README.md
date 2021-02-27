@@ -7,7 +7,7 @@
 
 ### Authors 
 * Joel Henry
-* Abegayle Ivey
+* Abygayle Ivey
 * Anna-Kay Graham
 * Samara Soares
 * Afridi Johnson

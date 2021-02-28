@@ -20,7 +20,7 @@
 
 <body>
     <header>
-        <div class="container-fluid p-0">
+        <div class="container-fluid p-0 fixed-top">
             <nav class="navbar main navbar-expand-md nav-menu">
                 <a class="navbar-brand" href="/">Reliable Autos</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-menu" aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,7 +39,6 @@
                 </div>
             </nav>
         </div>
-        
     </header>
 
     <section class="header-bg"></section>
@@ -140,8 +139,13 @@
                         {% for vehicle in inventory%}
                         <div class="col-lg-4 col-md-4 col-sm-6">
                             <div class="car-card-watch">
+                                <div class="image">
+                                    <a href="/inventory/vehicle/{{vehicle.id}}">
+                                        <img class="lazy" src="{{ url_for('static',filename='assets/placeholder.gif') }}" data-src="{{ vehicle.displayImage }}">
+                                    </a>
+                                </div>
                                 <div class="card-details">
-                                    <a href="/inventory/vehicle/{{vehicle.getID()}}">
+                                    <a href="/inventory/vehicle/{{vehicle.id}}">
                                         <div class="d-flex">
                                             <h6 class="title-head">{{vehicle.make}} {{ vehicle.model }}<div>{{vehicle.year}}</div></h6>
                                         </div>
@@ -181,8 +185,12 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.js"></script>
-
     <script src="{{ url_for('static',filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/yall.min.js') }}"></script>
+
+    <script>
+        yall()
+    </script>
 </body>
 
 

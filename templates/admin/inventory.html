@@ -28,7 +28,7 @@
                             <thead class="thead-dark">
                               <tr>
                                 <th scope="col">Vehicle</th>
-                                <th scope="col">Year</th>
+                                <th scope="col">Availability</th>
                                 <th scope="col">Price</th>
                               </tr>
                             </thead>
@@ -36,7 +36,7 @@
                                 {% for vehicle in inventory %}
                               <tr>
                                 <th>{{ vehicle.getTitle() }}</th>
-                                <td>{{ vehicle.getYear() }}</td>
+                                <td>{{ vehicle.vehicleStatus }}</td>
                                 <td>{{ vehicle.getPrice() }}</td>
                               </tr>
                               {% endfor %}

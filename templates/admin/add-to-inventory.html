@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    {{ dropzone.load_css() }}
 </head>
 <body>
     <div class="main-bg"></div>
@@ -18,33 +19,33 @@
         </a>
         <div class="login-column">
             <div class="login-mod">
-                <div class="main-head {{ errorClass }}">
-                    Add Vehicle to Inventory {{ error }}
+                <div class="main-head">
+                    Add Vehicle to Inventory
                 </div>
                 <div class="menu">
                     <div class="menu-body px-5">
-                        <form action="{{ url_for('addVehicleAction') }}" method="POST">
-                            <div class="row">
+                        <form id="add-vehicle" action="{{ url_for('addVehicleAction') }}" method="POST">
+                            <div class="row mb-2">
                                 <div class="col-md-6">
                                     <div class="form-group p-0">
                                         <label for=""><small>Chassis Number</small></label>
-                                        <input name="chassis" type="text" class="form-control form-control-md">
+                                        <input name="chassis" type="text" class="form-control form-control-md" required>
                                     </div>
                                     <div class="form-group p=0">
                                         <label for=""><small>Make</small></label>
-                                        <input name="make" type="text" class="form-control form-control-md">
+                                        <input name="make" type="text" class="form-control form-control-md" required>
                                     </div>
                                     <div class="form-group">
                                         <label for=""><small>Model</small></label>
-                                        <input name="model" type="text" class="form-control form-control-md">
+                                        <input name="model" type="text" class="form-control form-control-md" required>
                                     </div>
                                     <div class="form-group">
                                         <label for=""><small>Year</small></label>
-                                        <input name="year" type="number" class="form-control form-control-md">
+                                        <input name="year" type="number" class="form-control form-control-md" required>
                                     </div>
                                     <div class="form-group">
                                         <label for=""><small>Transmission</small></label>
-                                        <select name="trans" type="text" class="form-control form-control-md">
+                                        <select name="trans" type="text" class="form-control form-control-md" required>
                                             <option value="Automatic">Automatic</option>
                                             <option value="Manual">Manual</option>
                                         </select>
@@ -52,8 +53,15 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label for=""><small>Location</small></label>
+                                        <select name="location" type="text" class="form-control form-control-md" required>
+                                            <option value="Lot">Lot</option>
+                                            <option value="Transit">Transit</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
                                         <label for=""><small>Body Type</small></label>
-                                        <select name="type" type="text" class="form-control form-control-md">
+                                        <select name="type" type="text" class="form-control form-control-md" required>
                                             <option value="Sedan">Sedan</option>
                                             <option value="Hatchback">Hatchback</option>
                                             <option value="SUV">SUV</option>
@@ -61,20 +69,41 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for=""><small>Price</small></label>
-                                        <input name="price" type="text" class="form-control form-control-md">
-                                    </div>
-                                    <div class="form-group">
                                         <label for=""><small>Mileage</small></label>
-                                        <input name="mil" type="number" class="form-control form-control-md">
+                                        <input name="mil" type="number" class="form-control form-control-md" required>
                                     </div>
                                     <div class="form-group">
                                         <label for=""><small>Engine Number</small></label>
-                                        <input name="engine" type="number" class="form-control form-control-md">
+                                        <input name="engine" type="text" class="form-control form-control-md" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for=""><small>CC Rating</small></label>
-                                        <input name="cc" type="number" class="form-control form-control-md">
+                                        <label for=""><small>Colour</small></label>
+                                        <input name="colour" type="text" class="form-control form-control-md" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row my-2">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for=""><small>Price</small></label>
+                                        <input name="price" type="text" class="form-control form-control-md" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for=""><small>Price Terms</small></label>
+                                        <select name="priceStatus" type="text" class="form-control form-control-md" required>
+                                            <option value="Negotiable">Negotiable</option>
+                                            <option value="Non-Negotiable">Non-Negotiable</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row my-2">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for=""><small>Vehicle Description</small></label>
+                                        <textarea class="form-control" name="description" cols="30" rows="10"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -83,6 +112,19 @@
                                 <button class="btn btn-sm btn-secondary" type="reset">Reset</button>
                             </div>
                         </form>
+
+                        <hr>
+
+                        <div class="row my-2">
+                            <div class="col-md-12">
+                                <label class="text-muted">Upload Images</label>
+                                <form class="dropzone" action="{# url_for('addImagesAction') #}" method="POST" enctype="multipart/form-data">
+                                    <div class="fallback">
+                                        <input type="file" accept="image/*" multiple>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -93,6 +135,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    
+    {{ dropzone.load_js() }}
 </body>
 </html>

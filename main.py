@@ -5,7 +5,11 @@ from Presentation.CustomerUI import CustomerUI
 from Business.InventoryManager import InventoryManager
 from os import system, name 
 
+from flask_dropzone import Dropzone
+
+
 app = Flask(__name__)
+dropzone = Dropzone(app)
 adminUI = AdminUI()
 customerUI = CustomerUI()
 db = InventoryManager()
@@ -39,16 +43,20 @@ def addVehicle():
     return render_template('admin/add-to-inventory.html')
 
 
-@app.route('/admin/add-to-inventory', methods=['GET', 'POST'])
+@app.route('/admin/add-to-inventory/upload', methods=['GET', 'POST'])
 def addVehicleAction():
     if (request.method == 'POST'):
-        response = adminUI.addVehicle(request.form['chassis'], request.form['make'], request.form['model'],request.form['year'], request.form['price'], 'Black' ,request.form['trans'], request.form['type'], request.form['mil'],request.form['engine'], request.form['cc'])
+        
+        response = adminUI.addVehicle(request.form['chassis'], request.form['make'], request.form['model'], request.form['colour'], request.form['year'], request.form['trans'], request.form['type'], request.form['mil'],request.form['engine'], request.form['price'], request.form['priceStatus'], request.form['location'], request.form['description']) 
         
         if (response["status"]):
-            return redirect(url_for('adminMenu'), success = "add-to-inventory")
+            return render_template("admin/menu.html", name = 'Joel Henry', success = "add-to-inventory", make = request.form['make'], model = request.form['model'], year = request.form['year'])
 
-        return render_template(url_for('addVehicle'), error = ["add-to-inventory"], message = "")
-    return  render_template(url_for('addVehicle'), error = ["add-to-inventory"], message = "")
+        return render_template(url_for('addVehicle'), error = True, message = "")
+    return  render_template(url_for('addVehicle'), error = True, message = "")
+
+# @app.route('/upload', methods=['GET', 'POST'])
+# def addImagesAction():
 
 @app.route('/admin/inventory')
 def inventory():
@@ -56,7 +64,7 @@ def inventory():
 
     if (inventory["status"]):
         return render_template("admin/inventory.html", count = len(inventory['data']), inventory = inventory["data"])
-    return render_template("admin/inventory.html", error = ["inventory-error"], message = "")
+    return render_template("admin/inventory.html", error = True, message = "")
 
 
 @app.route('/admin/inventory/update-remove')
@@ -65,7 +73,8 @@ def removeInventory():
 
     if (inventory["status"]):
         return render_template("admin/inventory-update.html", inventory = inventory["data"], task = "remove")
-    return render_template("admin/inventory-update.html", error = ["inventory-remove-error"], message = "", task = "remove")
+    return render_template("admin/inventory-update.html", error = True, message = "", task = "remove")
+
 
 @app.route('/admin/inventory/update')
 def updateInventory():
@@ -73,7 +82,7 @@ def updateInventory():
 
     if (inventory["status"]):
         return render_template("admin/inventory-update.html", inventory = inventory["data"], task = "remove")
-    return render_template("admin/inventory-update.html", error = ["inventory-edit-error"], message = "", task = "edit")
+    return render_template("admin/inventory-update.html", error = True, message = "", task = "edit")
 
 
 @app.route('/admin/inventory/update-remove/<vid>')
@@ -85,16 +94,18 @@ def removeVehicle(vid):
 
         if (inventory["status"]):
             return render_template("admin/inventory.html", count = len(inventory['data']), inventory = inventory["data"], task = "remove", success = "remove-success")
-        return render_template("admin/inventory-update.html", error = ["inventory-edit-error"], inventory = inventory["data"], task = "remove", success = "remove-success")
-    return render_template("admin/inventory-update.html", error = ["inventory-edit-error", "remove-error"], count = len(inventory['data']), inventory = inventory["data"], task = "remove", success = "remove-success")
+        return render_template("admin/inventory-update.html", error = True, inventory = inventory["data"], task = "remove", success = "remove-success")
+    return render_template("admin/inventory-update.html", error = True, count = len(inventory['data']), inventory = inventory["data"], task = "remove", success = "remove-success")
     
+
 @app.route('/')
 def home():
     inventory = db.getInventory()
 
     if (inventory["status"]):
         return render_template("index.html", count = len(inventory['data']), inventory = inventory["data"])
-    return render_template("index.html", error = ["inventory-error"], message = "")
+    return render_template("index.html", error = True, message = "")
+
 
 @app.route('/search', methods=["GET","POST"])
 def filterInventory():
@@ -108,17 +119,26 @@ def filterInventory():
         inventory = customerUI.filterInventory(make, model, bType, trans, yearMin, yearMax)
         if (inventory["status"]):
             return render_template("index.html", count = len(inventory['data']), inventory = inventory["data"])
-        return render_template("index.html", error = ["inventory-error"], message = "")
+        return render_template("index.html", error = True, message = "")
     
     inventory = db.getInventory()
 
     if (inventory["status"]):
-        return render_template("index.html", error = ["filter-error"], count = len(inventory['data']), inventory = inventory["data"])
-    return render_template("index.html", error = ["inventory-error","filter-error"], message = "")
+        return render_template("index.html", error = True, count = len(inventory['data']), inventory = inventory["data"])
+    return render_template("index.html", error = True, message = "")
 
 
-if __name__ == "__main__":
+@app.route('/inventory/vehicle/<vid>')
+def viewVehicle(vid):
+    vehicle = customerUI.viewVehicle(vid)
     
+    if (vehicle["status"]):
+        
+        inventory = customerUI.filterInventory("", "", vehicle["data"].bodyType, vehicle["data"].trans, vehicle["data"].year, "99999")
+        return render_template("vehicle-template.html", title = "Used " + vehicle["data"].getTitle(), vehicle = vehicle["data"], inventory = inventory['data'])
+    return render_template("index.html", error = True, message = "")
+
+if __name__ == "__main__": 
     app.run(debug=True)
 
 

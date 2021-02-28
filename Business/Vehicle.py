@@ -1,10 +1,12 @@
 
 class Vehicle:
-
-    def __init__(self, chassisNumber):
-        self.chassisNumber = chassisNumber
+    def __init__(self):
+        self.images = ["https://firebasestorage.googleapis.com/v0/b/javvy-s-autozone.appspot.com/o/assets%2Fno-image.jpg?alt=media&token=5eba1699-aff8-4206-bca5-2a591597d179"]
+        self.displayImage = "https://firebasestorage.googleapis.com/v0/b/javvy-s-autozone.appspot.com/o/assets%2Fno-image.jpg?alt=media&token=5eba1699-aff8-4206-bca5-2a591597d179"
+        self.description = ""
+        self.vehicleStatus = "Available"
         
-    def setAttr(self, make, model, colour, year, trans, bodyType, mileage, engineNumber, ccRating, price):
+    def newVehicle(self, chassis, make, model, colour, year, trans, bodyType, mileage, engineNumber, price, priceStatus, location, description):
         self.make = make
         self.model = model
         self.colour = colour
@@ -13,58 +15,29 @@ class Vehicle:
         self.bodyType = bodyType
         self.mileage = mileage
         self.engineNumber = engineNumber
-        self.ccRating = ccRating
         self.price = price
+        self.priceStatus = priceStatus
+        self.location = location
+        self.description = description
+        self.id = chassis 
 
-    def getID(self):
-        return self.chassisNumber
-        
-        
-    def getMake(self):
-        return self.make
-        
-        
-    def getModel(self):
-        return self.model
+    def setImages(self, images, displayImage):
+        self.images = images
+        self.displayImage = displayImage
+
+    def addImage(self, image):
+        if (self.images[0] == "https://firebasestorage.googleapis.com/v0/b/javvy-s-autozone.appspot.com/o/assets%2Fno-image.jpg?alt=media&token=5eba1699-aff8-4206-bca5-2a591597d179"):
+            self.images = []
+        self.images.append(image)
 
     def getTitle(self):
-        return self.make+" "+self.model
-    
-    def getColour(self):
-        return self.colour
-        
-        
-    def getYear(self):
-        return self.year
-        
-        
-    def getTrans(self):
-        return self.trans
-        
-        
-    def getbodyType(self):
-        return self.bodyType
-        
-        
-    def getMil(self):
-        return ("%d MI"%self.mileage)
-        
-        
-    def getEngineNo(self):
-        return self.engineNumber
-        
-        
-    def getCCRating(self):
-        return ("%d CC"%self.ccRating)
+        return self.year+" "+self.make+" "+self.model
         
     def getPrice(self):
-        return ("$ "+str(self.price)+".00")
+        return "${:,.2f}".format(float(self.price))
 
-    def getPriceInt(self):
-        return self.price
-
-    def makeObj(self,obj):
-        self.chassisNumber = obj['chassisNumber']
+    
+    def toObject(self,obj):
         self.make = obj['make']
         self.model = obj['model']
         self.trans = obj['trans']
@@ -72,6 +45,12 @@ class Vehicle:
         self.bodyType = obj['bodyType']
         self.engineNumber = obj['engineNumber']
         self.price = obj['price']
-        self.ccRating = obj['ccRating']
         self.mileage = obj['mileage']
         self.colour = obj['colour']
+        self.priceStatus = obj['priceStatus']
+        self.location = obj['location']
+        self.description = obj['description']
+        self.id = obj['id']
+        self.images = obj['images']
+        self.displayImage = obj['displayImage']
+        self.vehicleStatus = obj['vehicleStatus']

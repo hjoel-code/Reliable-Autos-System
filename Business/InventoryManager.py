@@ -21,8 +21,8 @@ class InventoryManager:
         
         data = []
         for doc in response["data"]:
-            vehicle = Vehicle(doc.id)
-            vehicle.makeObj(doc.to_dict())
+            vehicle = Vehicle()
+            vehicle.toObject(doc.to_dict())
             data.append(vehicle)
         
         response['data'] = data
@@ -38,11 +38,25 @@ class InventoryManager:
         
         data = []
         for doc in response["data"]:
-            vehicle = Vehicle(doc.id)
-            vehicle.makeObj(doc.to_dict())
+            vehicle = Vehicle()
+            vehicle.toObject(doc.to_dict())
             data.append(vehicle)
 
         response['data'] = data
+        return response
+
+    
+    def getVehicle(self, vid):
+        response = self.db.read(vid)
+
+        if (not response["status"]):
+            response['data'] = None
+            return response
+
+        vehicle = Vehicle()
+        vehicle.toObject(response['data'].to_dict())
+
+        response['data'] = vehicle
         return response
         
 

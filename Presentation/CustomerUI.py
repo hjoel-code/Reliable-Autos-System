@@ -22,3 +22,5 @@ class CustomerUI:
         return self.inventory.getQuerriedInventory()
         
     
+    def viewVehicle(self, vid):
+        return self.inventory.getVehicle(vid)

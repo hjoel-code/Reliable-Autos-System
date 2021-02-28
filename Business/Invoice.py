@@ -40,12 +40,18 @@ class Invoice:
 
    
     def getDiscountAmt(self):
-        return sum(self.discount)
+        summ = 0
+        for i in self.discount:
+            summ+= i.amount
+        return summ
         
 
     def getTotalExpence(self):
-        total=float(sum(self.expense)*GCT + sum(self.expense))
-        return total
+       total = 0
+       for x in self.expense:
+            total += x.amount
+       total += total*GCT
+       return total
         
 
     def getDate(self):

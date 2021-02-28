@@ -34,7 +34,7 @@ class Invoice:
     def getGrossAmt(self):
         return float(self.vehicle.price)
 
-    def getNetAmt(self):
+    def getFinalAmt(self):
         price = float(self.vehicle.price)
         return (price + self.getTotalExpence()) - self.getDiscountAmt()
 

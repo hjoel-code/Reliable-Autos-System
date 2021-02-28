@@ -38,11 +38,15 @@ class Invoice:
         price = float(self.vehicle.price)
         return (price + self.getTotalExpence()) - self.getDiscountAmt()
 
+   
     def getDiscountAmt(self):
-        pass
+        return sum(self.discount)
+        
 
     def getTotalExpence(self):
-        pass
+        total=float(sum(self.expense)*GCT + sum(self.expense))
+        return total
+        
 
-    def getDate()
-        pass
+    def getDate(self):
+        return self.date

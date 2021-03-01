@@ -1,10 +1,12 @@
 from Business.InventoryManager import InventoryManager
+from Business.RequestManager import RequestManager
 from Persistence.DatabaseManager import DatabaseManager
 from Business.Vehicle import Vehicle
 
 class CustomerUI:
     def __init__(self):
         self.inventory = InventoryManager()
+        self.requests = RequestManager()
     
     def filterInventory(self, make, model, bType, trans, minYear, maxYear):
         self.inventory.resetQuery()
@@ -21,6 +23,10 @@ class CustomerUI:
         
         return self.inventory.getQuerriedInventory()
         
-    
     def viewVehicle(self, vid):
         return self.inventory.getVehicle(vid)
+
+
+    def sendRequest(self, vid, firstName, lastName, email, requestType, request):
+        response = self.requests.addRequest(vid, firstName, lastName, email, requestType, request)
+        return response

@@ -1,6 +1,8 @@
 from Persistence.DatabaseManager import DatabaseManager
 from Business.Vehicle import Vehicle
 
+
+
 class InventoryManager:
     def __init__(self):
         self.db = DatabaseManager('Inventory')
@@ -61,5 +63,4 @@ class InventoryManager:
         
 
 
-        
 

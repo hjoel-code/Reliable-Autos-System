@@ -5,7 +5,7 @@ from firebase_admin import credentials, firestore, storage
 
 import pyrebase
 
-cred = credentials.Certificate('./javvy-autozone-firebase-adminsdk-ogsma-8b54558a09.json')
+cred = credentials.Certificate('./Reliable-Autos-System/javvy-autozone-firebase-adminsdk-ogsma-8b54558a09.json')
 default_app = firebase_admin.initialize_app(cred)
 
 config = {
@@ -65,8 +65,6 @@ class DatabaseManager:
         except Exception as error:
             response["error"] = error
             print(error)
-
-        
         return response
 
     def update(self, docID, obj):

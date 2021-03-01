@@ -138,6 +138,16 @@ def viewVehicle(vid):
         return render_template("vehicle-template.html", title = "Used " + vehicle["data"].getTitle(), vehicle = vehicle["data"], inventory = inventory['data'])
     return render_template("index.html", error = True, message = "")
 
+@app.route('/inventory/vehicle/<vid>/request', methods=['GET', 'POST'])
+def addRequestAction(vid):
+    if (request.method == 'POST'):
+        response = customerUI.sendRequest(vid, request.form['firstName'], request.form['lastName'], request.form['email'], request.form['requestType'], request.form['custom-message'])
+        return redirect("/inventory/vehicle/"+vid)
+    return redirect("/inventory/vehicle/"+vid)
+
+
+
+
 if __name__ == "__main__": 
     app.run(debug=True)
 

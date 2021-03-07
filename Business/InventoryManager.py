@@ -7,6 +7,11 @@ class InventoryManager:
     def __init__(self):
         self.db = DatabaseManager('Inventory')
 
+    def addVehicleToInventory(self, chassis, make, model, colour, year, trans, bodyType, mileage, engineNumber, price, priceStatus, location, description):
+        vehicle = Vehicle()
+        vehicle.newVehicle(chassis, make, model, colour, year, trans, bodyType, mileage, engineNumber, price, priceStatus, location, description)
+        return self.db.write(newVehicle.id, newVehicle)
+
     def resetQuery(self):
         self.db.resetQuery()
 
@@ -60,7 +65,8 @@ class InventoryManager:
 
         response['data'] = vehicle
         return response
-        
+    
 
-
+    def removeVehicle(self, vehicleID):
+        return self.db.remove(vehicleID) 
 

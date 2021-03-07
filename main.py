@@ -1,8 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 
-from Presentation.AdminUI import AdminUI
-from Presentation.CustomerUI import CustomerUI
-from Business.InventoryManager import InventoryManager
+from Presentation.UI import AdminUI
+from Presentation.UI import CustomerUI
 from os import system, name 
 
 from flask_dropzone import Dropzone
@@ -10,9 +9,9 @@ from flask_dropzone import Dropzone
 
 app = Flask(__name__)
 dropzone = Dropzone(app)
+
 adminUI = AdminUI()
 customerUI = CustomerUI()
-db = InventoryManager()
 
 @app.route('/admin')
 @app.route('/admin')
@@ -60,52 +59,47 @@ def addVehicleAction():
 
 @app.route('/admin/inventory')
 def inventory():
-    inventory = db.getInventory()
+    inventory = adminUI.viewInventory()
 
     if (inventory["status"]):
         return render_template("admin/inventory.html", count = len(inventory['data']), inventory = inventory["data"])
     return render_template("admin/inventory.html", error = True, message = "")
 
-
 @app.route('/admin/inventory/update-remove')
 def removeInventory():
-    inventory = db.getInventory()
+    inventory = adminUI.viewInventory()
 
     if (inventory["status"]):
         return render_template("admin/inventory-update.html", inventory = inventory["data"], task = "remove")
     return render_template("admin/inventory-update.html", error = True, message = "", task = "remove")
 
-
 @app.route('/admin/inventory/update')
 def updateInventory():
-    inventory = db.getInventory()
+    inventory = adminUI.viewInventory()
 
     if (inventory["status"]):
         return render_template("admin/inventory-update.html", inventory = inventory["data"], task = "remove")
     return render_template("admin/inventory-update.html", error = True, message = "", task = "edit")
-
 
 @app.route('/admin/inventory/update-remove/<vid>')
 def removeVehicle(vid):
     response = adminUI.removeVehicle(vid)
 
     if (response["status"]):
-        inventory = db.getInventory()
+        inventory = adminUI.viewInventory()
 
         if (inventory["status"]):
             return render_template("admin/inventory.html", count = len(inventory['data']), inventory = inventory["data"], task = "remove", success = "remove-success")
         return render_template("admin/inventory-update.html", error = True, inventory = inventory["data"], task = "remove", success = "remove-success")
     return render_template("admin/inventory-update.html", error = True, count = len(inventory['data']), inventory = inventory["data"], task = "remove", success = "remove-success")
     
-
 @app.route('/')
 def home():
-    inventory = db.getInventory()
+    inventory = customerUI.viewInventory()
 
     if (inventory["status"]):
         return render_template("index.html", count = len(inventory['data']), inventory = inventory["data"])
     return render_template("index.html", error = True, message = "")
-
 
 @app.route('/search', methods=["GET","POST"])
 def filterInventory():
@@ -121,12 +115,11 @@ def filterInventory():
             return render_template("index.html", count = len(inventory['data']), inventory = inventory["data"])
         return render_template("index.html", error = True, message = "")
     
-    inventory = db.getInventory()
+    inventory = customerUI.viewInventory()
 
     if (inventory["status"]):
         return render_template("index.html", error = True, count = len(inventory['data']), inventory = inventory["data"])
     return render_template("index.html", error = True, message = "")
-
 
 @app.route('/inventory/vehicle/<vid>')
 def viewVehicle(vid):

@@ -152,8 +152,8 @@ class DatabaseManager:
         return response
 
     def storeFile(self, fileSource, fileDestination):
-        img = self.storage.child(fileDestination).put(fileSource)
-        return self.storage.child(fileDestination).get_url(img['downloadTokens'])
+        upldfile = self.storage.child(fileDestination).put(fileSource)
+        return self.storage.child(fileDestination).get_url(upldfile['downloadTokens'])
 
 
 

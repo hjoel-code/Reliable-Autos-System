@@ -33,6 +33,10 @@ def signUp():
 def adminMenu():
     return render_template("admin/menu.html", name = 'Joel Henry')
 
+
+
+
+
 @app.route('/admin/add-to-inventory')
 def addVehicle():
     return render_template('admin/add-to-inventory.html')
@@ -51,7 +55,6 @@ def addVehicleAction():
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.',1)[1].lower() in ['jpg', 'png', 'jpeg']
-
 
 @app.route('/upload/<vid>', methods=['GET', 'POST'])
 def addImagesAction(vid):
@@ -74,7 +77,6 @@ def addImagesAction(vid):
             print('Wrong File Type')
             return "Wrong File Type", 400
 
-
 @app.route('/admin/inventory')
 def inventory():
     inventory = adminUI.viewInventory()
@@ -82,6 +84,10 @@ def inventory():
     if (inventory["status"]):
         return render_template("admin/inventory.html", count = len(inventory['data']), inventory = inventory["data"])
     return render_template("admin/inventory.html", error = True, message = "")
+
+
+
+
 
 @app.route('/admin/inventory/update-remove')
 def removeInventory():
@@ -116,6 +122,10 @@ def editVehicle(vid):
     
     return redirect(url_for('updateInventory'))
 
+
+
+
+
 @app.route('/admin/requests')
 def viewRequest():
     response = adminUI.viewAllReaquests()
@@ -131,6 +141,12 @@ def requestDetails(id):
     if (response['status']):
         return render_template("admin/request-template.html", request = response['data'])
     return render_template(url_for('viewRequest'))
+
+
+
+
+
+
 
 @app.route('/')
 def home():

@@ -9,45 +9,48 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}">
 </head>
 <body>
     <div class="main-bg"></div>
     <div class="container-fluid">
-        <a class="btn back-btn mr-auto" href="{{ url_for('login') }}">
-            <span><i class="fa fa-sign-out"></i></span> Sign Out
+        <a class="btn back-btn mr-auto" href="{{ url_for('adminMenu') }}">
+            <span><i class="fa fa-arrow-left"></i></span> Go Back
         </a>
         <div class="login-column">
             <div class="login-mod">
                 <div class="main-head">
-                    Reliable Autos Administrator Menu
+                    Reliable Autos Inventory
                 </div>
                 <div class="menu">
-                    <div class="menu-head">Hello {{ name }}</div>
-                        <div class="menu-item menu-dropdown" data-toggle="collapse" data-target="#updates-menu"> Update Inventory
-                            <div class="dropdown-menu-ra collapse pt-2" id="updates-menu">
-                                <a href="{{ url_for('addVehicle') }}" class="menu-item drop">Add to Inventory</a>
-                                <a href="{{ url_for('removeInventory') }}" class="menu-item drop">Remove from Inventory</a>
-                                <a href="{{ url_for('updateInventory') }}"  class="menu-item drop">Edit Vehicle Information</a>
-                            </div>
-                        </div>
-                        <a href="{{ url_for('inventory') }}" class="menu-item">View Inventory</a>
-                        <a href="{{ url_for('viewRequest') }}" class="menu-item">Manage Requests</a>
-                        <a href="{{ url_for('signUp') }}" class="menu-item">Add Administrator</a>
+                    <div class="menu-head">
+                        Customer Requests (Count: {{ count }})
+                    </div>
+                    <div class="menu-body">
+                        <table class="table table-striped table-hover">
+                            <thead class="thead-dark">
+                              <tr>
+                                <th scope="col">Vehicle</th>
+                                <th scope="col">Customer</th>
+                                <th scope="col">Request Type</th>
+                                <th scope="col">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                {% for request in requests %}
+                              <tr>
+                                <th>{{ request.vehicle.getTitle() }}</th>
+                                <td>{{ request.customer.getFullName() }}</td>
+                                <td>{{ request.getRequestType() }}</td>
+                                <td><a class="btn btn-sm btn-secondary" href="/admin/request/{{ request.id }}">More Details<span class="ml-2 fa fa-plus"></span></a></td>
+                            </tr>
+                              {% endfor %}
+                            </tbody>
+                          </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    {% if success == "add-to-inventory" %}
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        Successfully Added {{year}} {{make}} {{model}}
-        <button type="button" class="close ml-3" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    {% endif %}
 
     <!-- JS, Popper.js, and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

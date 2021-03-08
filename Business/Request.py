@@ -22,15 +22,33 @@ class Request:
         self.requestOpt = request
 
     def getRequestType(self):
-        return self.RequestType
+        if self.requestType == "purchase":
+            return "Vehicle Purchase"
+        elif self.requestType == "moreinfo":
+            return "More Information"
+        else: 
+            return "Other"
 
-    def getTimeStamp (self,timeStamp):
-        return self.timestamp
+    def getTimeStamp (self):
+        return self.timeStamp
 
     def toDict(self):
         self.customer = self.customer.toDict().__dict__
-
+        self.vehicle = self.vehicle.__dict__
         return self
+
+    def toObject(self, obj, id):
+        self.id = id
+        self.requestType = obj['requestType']
+        self.timeStamp = obj['timeStamp']
+        self.requestOpt = obj['requestOpt']
+        
+        self.vehicle = Vehicle()
+        self.vehicle.toObject(obj['vehicle'])
+
+        self.customer = Customer('','','')
+        self.customer.toObject(obj['customer'])
+
 
 
 

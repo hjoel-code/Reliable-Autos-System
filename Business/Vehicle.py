@@ -21,10 +21,6 @@ class Vehicle:
         self.description = description
         self.id = chassis 
 
-    def setImages(self, images, displayImage):
-        self.images = images
-        self.displayImage = displayImage
-
     def addImage(self, image):
         if (self.images[0] == "https://firebasestorage.googleapis.com/v0/b/javvy-s-autozone.appspot.com/o/assets%2Fno-image.jpg?alt=media&token=5eba1699-aff8-4206-bca5-2a591597d179"):
             self.images = []
@@ -52,5 +48,5 @@ class Vehicle:
         self.description = obj['description']
         self.id = obj['id']
         self.images = obj['images']
-        self.displayImage = obj['displayImage']
+        self.displayImage = self.images[0]
         self.vehicleStatus = obj['vehicleStatus']

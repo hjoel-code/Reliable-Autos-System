@@ -4,6 +4,8 @@ from Business.InvoiceManager import InvoiceManager
 from Security.Authentication import Authentication
 from Persistence.DatabaseManager import DatabaseManager
 
+from random import randint
+
 class UI:
     def __init__(self):
         self.inventory = InventoryManager()
@@ -45,19 +47,21 @@ class AdminUI(UI):
 
     def addVehicle(self, chassis, make, model, colour, year, trans, bodyType, mileage, engineNumber, price, priceStatus, location, description):
         return self.inventory.addVehicleToInventory(chassis, make, model, colour, year, trans, bodyType, mileage, engineNumber, price, priceStatus, location, description)
-        # path = "/vehicleImgs/img-"+str(random.randint(1000,9999))+"-"+str(random.randint(1000,9999))
-        # url = self.db.storeFile(images, path)
-        # self.newVehicle.addImage(url)
-        # return None
+        
+
+    def addImages(self, vid, img):
+        path = "/vehicleImgs/"+vid+"/img-"+str(randint(1000,9999))+"-"+str(randint(1000,9999))
+        return self.inventory.addImagesToVehicle(vid, img, path)
+        
 
     def removeVehicle(self, vehicleID):
         return self.inventory.removeVehicle(vehicleID) 
 
     def viewAllReaquests(self):
-        pass
+        return self.request.getAllRequests()
 
-    def viewRequest(self):
-        pass
+    def viewRequest(self, id):
+        return self.request.getRequest(id)
 
     def filterRequest(self):
         pass

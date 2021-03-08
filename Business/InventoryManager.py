@@ -10,7 +10,19 @@ class InventoryManager:
     def addVehicleToInventory(self, chassis, make, model, colour, year, trans, bodyType, mileage, engineNumber, price, priceStatus, location, description):
         vehicle = Vehicle()
         vehicle.newVehicle(chassis, make, model, colour, year, trans, bodyType, mileage, engineNumber, price, priceStatus, location, description)
-        return self.db.write(newVehicle.id, newVehicle)
+        return self.db.write(vehicle.id, vehicle)
+
+    def addImagesToVehicle(self, vid, imgSrc, imgDes):
+        vehicle = self.getVehicle(vid)
+        if (vehicle['status']):
+            image = self.db.storeFile(imgSrc, imgDes)
+
+            if (image['status']):
+                vehicle['data'].addImage(image['data'])
+                response = self.db.update(vid, vehicle['data'].__dict__)
+                print(response)
+                return True
+        return False
 
     def resetQuery(self):
         self.db.resetQuery()
@@ -52,7 +64,6 @@ class InventoryManager:
         response['data'] = data
         return response
 
-    
     def getVehicle(self, vid):
         response = self.db.read(vid)
 
@@ -64,8 +75,7 @@ class InventoryManager:
         vehicle.toObject(response['data'].to_dict())
 
         response['data'] = vehicle
-        return response
-    
+        return response    
 
     def removeVehicle(self, vehicleID):
         return self.db.remove(vehicleID) 

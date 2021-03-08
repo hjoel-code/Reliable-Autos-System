@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 
 from Presentation.UI import AdminUI
 from Presentation.UI import CustomerUI
@@ -14,7 +14,6 @@ adminUI = AdminUI()
 customerUI = CustomerUI()
 
 @app.route('/admin')
-@app.route('/admin')
 def login():
     return render_template("admin/auth/login.html")
 
@@ -26,21 +25,17 @@ def loginAction():
         error = 'Invalid username/password'
         return render_template('login.html', error=error)
 
-
 @app.route('/admin/auth/signUp')
 def signUp():
     return render_template("admin/auth/signUp.html")
-
 
 @app.route('/admin/menu')
 def adminMenu():
     return render_template("admin/menu.html", name = 'Joel Henry')
 
-
 @app.route('/admin/add-to-inventory')
 def addVehicle():
     return render_template('admin/add-to-inventory.html')
-
 
 @app.route('/admin/add-to-inventory/upload', methods=['GET', 'POST'])
 def addVehicleAction():
@@ -49,13 +44,36 @@ def addVehicleAction():
         response = adminUI.addVehicle(request.form['chassis'], request.form['make'], request.form['model'], request.form['colour'], request.form['year'], request.form['trans'], request.form['type'], request.form['mil'],request.form['engine'], request.form['price'], request.form['priceStatus'], request.form['location'], request.form['description']) 
         
         if (response["status"]):
-            return render_template("admin/menu.html", name = 'Joel Henry', success = "add-to-inventory", make = request.form['make'], model = request.form['model'], year = request.form['year'])
+            return render_template("admin/img-upload-template.html", vid = request.form['chassis'], success = "add-to-inventory", make = request.form['make'], model = request.form['model'], year = request.form['year'])
 
         return render_template(url_for('addVehicle'), error = True, message = "")
     return  render_template(url_for('addVehicle'), error = True, message = "")
 
-# @app.route('/upload', methods=['GET', 'POST'])
-# def addImagesAction():
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.',1)[1].lower() in ['jpg', 'png', 'jpeg']
+
+
+@app.route('/upload/<vid>', methods=['GET', 'POST'])
+def addImagesAction(vid):
+    if request.method == 'POST':
+
+        if 'file' not in request.files:
+            print('No file part')
+            return "No file", 400
+
+        img = request.files['file']
+
+        if img.filename == '':
+            print('No selected file')
+            return "No selected file", 400
+
+        if img and allowed_file(img.filename):
+            print('File successfully uploaded') if adminUI.addImages(vid, img) else print("Failed to upload Image") 
+            return "Successfully Uploaded", 200
+        else:
+            print('Wrong File Type')
+            return "Wrong File Type", 400
+
 
 @app.route('/admin/inventory')
 def inventory():
@@ -78,7 +96,7 @@ def updateInventory():
     inventory = adminUI.viewInventory()
 
     if (inventory["status"]):
-        return render_template("admin/inventory-update.html", inventory = inventory["data"], task = "remove")
+        return render_template("admin/inventory-update.html", inventory = inventory["data"], task = "edit")
     return render_template("admin/inventory-update.html", error = True, message = "", task = "edit")
 
 @app.route('/admin/inventory/update-remove/<vid>')
@@ -86,13 +104,34 @@ def removeVehicle(vid):
     response = adminUI.removeVehicle(vid)
 
     if (response["status"]):
-        inventory = adminUI.viewInventory()
-
-        if (inventory["status"]):
-            return render_template("admin/inventory.html", count = len(inventory['data']), inventory = inventory["data"], task = "remove", success = "remove-success")
-        return render_template("admin/inventory-update.html", error = True, inventory = inventory["data"], task = "remove", success = "remove-success")
+        return redirect(url_for('removeInventory'))
     return render_template("admin/inventory-update.html", error = True, count = len(inventory['data']), inventory = inventory["data"], task = "remove", success = "remove-success")
+
+@app.route('/admin/inventory/update/<vid>')
+def editVehicle(vid):
+    response = adminUI.viewVehicle(vid)
+
+    if (response["status"]):
+        return render_template('admin/vehicle-template.html', vehicle = response['data'])
     
+    return redirect(url_for('updateInventory'))
+
+@app.route('/admin/requests')
+def viewRequest():
+    response = adminUI.viewAllReaquests()
+
+    if (response["status"]):
+        return render_template("admin/all-requests.html", requests = response['data'], count = len(response['data']))
+    return render_template(url_for('adminMenu'))
+
+@app.route('/admin/request/<id>')
+def requestDetails(id):
+    response = adminUI.viewRequest(id)
+
+    if (response['status']):
+        return render_template("admin/request-template.html", request = response['data'])
+    return render_template(url_for('viewRequest'))
+
 @app.route('/')
 def home():
     inventory = customerUI.viewInventory()
@@ -142,6 +181,7 @@ def addRequestAction(vid):
 
 
 if __name__ == "__main__": 
+    app.secret_key = "AIzaSyBrZVMANrVDDLuqYJktyTDolrDsSDNyZHc"
     app.run(debug=True)
 
 

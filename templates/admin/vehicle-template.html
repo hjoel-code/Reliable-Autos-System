@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reliable Autos</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+</head>
+<body>
+    <div class="main-bg"></div>
+    <div class="container-fluid">
+        <a class="btn back-btn mr-auto" href="{{ url_for('adminMenu') }}">
+            <span><i class="fa fa-arrow-left"></i></span> Go Back
+        </a>
+        <div class="login-column">
+            <div class="login-mod">
+                <div class="main-head">
+                    Reliable Autos Inventory
+                </div>
+                <div class="menu">
+                    <div class="menu-head"> {{ vehicle.getTitle() }} </div>
+                    <div class="menu-body">
+                        <div class="row my-2">
+                            <div id="vehicle-imgs" class="carousel slide px-5" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    {% for img in vehicle.images %}
+                                    {% if vehicle.images[0] == img %}
+                                        <div class="carousel-item active">
+                                    {% else %}
+                                        <div class="carousel-item">
+                                    {% endif %}
+                                    <img class="lazy w-100" src="{{ url_for('static',filename='assets/placeholder.gif') }}" data-src = "{{ img }}">
+                                  </div>
+                                  {% endfor %}
+                                </div>
+                                <a class="carousel-control-prev" href="#vehicle-imgs" role="button" data-slide="prev">
+                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                  <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#vehicle-imgs" role="button" data-slide="next">
+                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                  <span class="sr-only">Next</span>
+                                </a>
+                              </div>
+                        </div>
+
+
+                        <hr>
+
+
+                        <div class="row px-5 mb-2">
+                            <div class="col-md-6">
+                                <div class="form-group p=0">
+                                    <label for=""><small>Make</small></label>
+                                    <input name="make" type="text" class="form-control form-control-sm" placeholder="{{ vehicle.make }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for=""><small>Model</small></label>
+                                    <input name="model" type="text" class="form-control form-control-sm" placeholder="{{ vehicle.model }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for=""><small>Year</small></label>
+                                    <input name="year" type="number" class="form-control form-control-sm" placeholder="{{ vehicle.year }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for=""><small>Transmission</small></label>
+                                    <select name="trans" type="text" class="form-control form-control-sm" value="{{ vehicle.trans }}">
+                                        <option value="Automatic">Automatic</option>
+                                        <option value="Manual">Manual</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for=""><small>Location</small></label>
+                                    <select name="location" type="text" class="form-control form-control-sm" value="{{ vehicle.location }}">
+                                        <option value="Lot">Lot</option>
+                                        <option value="Transit">Transit</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for=""><small>Body Type</small></label>
+                                    <select name="type" type="text" class="form-control form-control-sm" value="{{ vehicle.bodyType }}">
+                                        <option value="Sedan">Sedan</option>
+                                        <option value="Hatchback">Hatchback</option>
+                                        <option value="SUV">SUV</option>
+                                        <option value="Truck">Truck</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for=""><small>Mileage</small></label>
+                                    <input name="mil" type="number" class="form-control form-control-sm" placeholder="{{ vehicle.mileage }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for=""><small>Engine Number</small></label>
+                                    <input name="engine" type="text" class="form-control form-control-sm" placeholder="{{ vehicle.engineNumber }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for=""><small>Colour</small></label>
+                                    <input name="colour" type="text" class="form-control form-control-sm" placeholder="{{ vehicle.colour }}">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <hr>
+
+                        <div class="row my-2 px-5">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for=""><small>Price</small></label>
+                                    <input name="price" type="text" class="form-control form-control-md" placeholder="{{ vehicle.price }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for=""><small>Price Terms</small></label>
+                                    <select name="priceStatus" type="text" class="form-control form-control-md" value = "{{ vehicle.priceStatus }}">
+                                        <option value="Negotiable">Negotiable</option>
+                                        <option value="Non-Negotiable">Non-Negotiable</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                            <div class="row my-2 px-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for=""><small>Vehicle Description</small></label>
+                                        <textarea placeholder="{{ vehicle.description }}" class="form-control" name="description" cols="30" rows="10"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static',filename='js/yall.min.js') }}"></script>
+
+    <script>
+        yall()
+    </script>
+</body>
+</html>

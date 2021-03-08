@@ -7,3 +7,9 @@ class Address:
     
     def toString(self):
         return self.addrLn1 + "\n" + self.addrLn2 + "\n" + self.addrLn3 + "\n" + self.parish
+
+    def toObject(self, obj):
+        self.addrLn1 = obj['addrLn1']
+        self.addrLn2 = obj['addrLn2']
+        self.addrLn3 = obj['addrLn3']
+        self.parish = obj['parish']

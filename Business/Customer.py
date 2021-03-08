@@ -30,3 +30,14 @@ class Customer:
         except:
             pass
         return self
+
+    def toObject(self, obj):
+        self.fName = obj['fName']
+        self.lName = obj['lName']
+        self.email = obj['email']
+
+        try:
+            self.address = Address('','','','')
+            self.address.toObject(obj['address'])
+        except:
+            self.address = None

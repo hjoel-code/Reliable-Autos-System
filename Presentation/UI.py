@@ -48,12 +48,10 @@ class AdminUI(UI):
     def addVehicle(self, chassis, make, model, colour, year, trans, bodyType, mileage, engineNumber, price, priceStatus, location, description):
         return self.inventory.addVehicleToInventory(chassis, make, model, colour, year, trans, bodyType, mileage, engineNumber, price, priceStatus, location, description)
         
-
     def addImages(self, vid, img):
         path = "/vehicleImgs/"+vid+"/img-"+str(randint(1000,9999))+"-"+str(randint(1000,9999))
         return self.inventory.addImagesToVehicle(vid, img, path)
         
-
     def removeVehicle(self, vehicleID):
         return self.inventory.removeVehicle(vehicleID) 
 

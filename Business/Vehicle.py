@@ -32,7 +32,6 @@ class Vehicle:
     def getPrice(self):
         return "${:,.2f}".format(float(self.price))
 
-    
     def toObject(self,obj):
         self.make = obj['make']
         self.model = obj['model']

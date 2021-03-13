@@ -17,7 +17,7 @@ class RequestManager:
         if (vehicle['status']):
             request = Request(vehicle['data'], customer, requestType)
             request.addRequestOpt(requestOpt)
-            response = self.db.write("", request.toDict() )
+            response = self.db.write(request.id, request.toDict() )
         else:
             response  = vehicle
 
@@ -33,7 +33,7 @@ class RequestManager:
         data = []
         for doc in response["data"]:
             request = Request(None, None, 1)
-            request.toObject(doc.to_dict(), doc.id)
+            request.toObject(doc.to_dict())
             data.append(request)
 
         response['data'] = data
@@ -47,10 +47,16 @@ class RequestManager:
             return response
 
         request = Request(None, None, 1)
-        request.toObject(response['data'].to_dict(), response['data'].id)
+        request.toObject(response['data'].to_dict())
 
         response['data'] = request
         return response  
 
-
+    def addAddress(self, fName, lName, addr1, addr2, addr3, parish, request):
+        request.customer.setAddress(addr1, addr2, addr3, parish)
+        request.customer.fName = fName
+        request.customer.lName = lName
+        request.tokenValid = False
+        request.toDict()
+        return self.db.update(request.id, request.__dict__ )
         

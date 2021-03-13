@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/invoice.css') }}">
+
+    <style>
+        @import "https://fonts.googleapis.com/css?family=Roboto|Roboto Condensed|Roboto Mono|Fira Sans|Nunito|Didact Gothic";
+        body {
+            font-size: 12pt;
+            color: rgb(75, 75, 75);
+        }
+        main.page {
+            background: white;
+            display: block;
+            padding: 2cm;
+            overflow-x: hidden;
+        }
+
+        .company-logo-head {
+            padding: 40px;
+        }
+
+        .company-address {
+            margin-left: 80px;
+            font-size: 12pt;
+            line-height: 20px;
+            color: rgb(131, 131, 131);
+        }
+
+        div.spacer-line {
+            width: 100%;
+            background: rgb(101, 163, 192);
+            height: 2px;
+        }
+
+        div.spacer-line.h-1 {
+            height: 1px;
+        }
+
+        div.spacer-line.sign {
+            height: 1px;
+            width: 250px;
+            background: rgb(75, 75, 75);
+        }
+
+        .table-sm {
+            width: 100%;
+        }
+
+        thead {
+            background: rgb(101, 163, 192);
+        }
+
+        thead th, thead td {
+            color: white;
+            font-weight: 800;
+            font-size: 14pt;
+        }
+
+        .empty-row {
+            opacity: 0;
+        }
+
+        .s-title {
+            font-family: Nunito;
+            font-size: 14pt;
+            color: rgb(41, 91, 114);
+        }
+
+        .s-bottom {
+            margin-top: 50px;
+        }
+        
+    </style>
+</head>
+<body>
+    <main class="page">
+        <div class="invoice-head">
+            <div class="row">
+                <div class="col-12">
+                    <div class="comapany-logo-head">
+                        <img src="https://firebasestorage.googleapis.com/v0/b/javvy-autozone.appspot.com/o/logo%2Flogo2.png?alt=media&token=ef539a9f-5127-476b-81e7-ffe6c31a4104">
+                    </div>
+                    <div class="company-address"> <b>Address:</b> Mandiville Manchester, Jamaica <br><b>Email: reliableAutos@gmail.com</b> </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="spacer-line my-3"></div>
+
+        <div class="row px-3">
+            <div class="col-4">
+                <div class="s-title">Date</div>
+                <!-- {# invoice.data #} -->
+                Janauary 12, 2019
+            </div>
+            <div class="col-4">
+                <div class="s-title">To</div>
+                <!-- {# customer.name #} -->Joel Henry<br> 
+                <!-- {# customer.address #} <br> -->
+            </div>
+            <div class="col-4">
+                <div class="s-title">Invoice No. 1001</div>
+            </div>
+        </div>
+
+        <div class="spacer-line h-1 my-5"></div>
+
+        <div class="invoice-table">
+            <table class="table-sm table-striped">
+                <thead class="thead">
+                  <tr>
+                    <th scope="col">Quantity</th>
+                    <th>Description</th>
+                    <th scope="col"></th>
+                    <th scope="col">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>2019 Nissan Sylphy</td>
+                    <td></td>
+                    <td>$2,000,000.00</td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>Colour: </td>
+                    <td>White</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>Chassis No: </td>
+                    <td>JWDJ239DK23DK9DDO23KODO</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>Engine No: </td>
+                    <td>JWDJ239DK23DK9DDO23KODO</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>Mileage: </td>
+                    <td>12,000 MI</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>Body Type: </td>
+                    <td>Sedan</td>
+                    <td></td>
+                  </tr>
+
+                  <tr>
+                    <td></td>
+                    <td><p class="empty-row p-0 m-0"> Empty</p></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>Additional Expenses</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td>Alarm Installation</td>
+                    <td>$2,500.00</td>
+                  </tr>
+
+                  <tr>
+                    <td></td>
+                    <td><p class="empty-row p-0 m-0"> Empty</p></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>Discounts</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td>Christmas Special</td>
+                    <td>- $20,500.00</td>
+                  </tr>
+
+                  <tr>
+                    <td></td>
+                    <td><p class="empty-row p-0 m-0"> Empty</p></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td><p class="empty-row p-0 m-0"> Empty</p></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td>Subtotal</td>
+                    <td>$ 3,000,000.00</td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td>Sales Tax (GCT)</td>
+                    <td>$ 100,000.00</td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td><p class="empty-row p-0 m-0"> Empty</p></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <thead>
+                    <td></td>
+                    <td></td>
+                    <td>Total</td>
+                    <td>$ 3,100,000.00</td>
+                  </thead>
+                </tbody>
+              </table>
+        </div>
+
+        <div class="row s-bottom">
+            <div class="col-6">
+                <div class="spacer-line sign"></div>
+                <p class="p-0 m-0">Mr. James O'Bryan (Sales Manager)</p>
+            </div>
+            <div class="col-6">
+                <p class="s-title p-0 m-0 text-right">Thanks you for youur business!</p>
+            </div>
+        </div>
+
+        <div class="spacer-line h-1 mt-5 mb-1"></div>
+
+        <div class="row">
+            <div class="col-4">Tel: 1 876 324-9012</div>
+            <div class="col-4">Email: reliableAutos@gmail.com</div>
+            <div class="col-4">Web: reliableautos.com</div>
+        </div>
+
+    </main>
+</body>
+</html>

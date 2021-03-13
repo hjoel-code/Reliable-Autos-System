@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, make_response
+import pdfkit
 
 from Presentation.UI import AdminUI
 from Presentation.UI import CustomerUI
@@ -194,6 +195,40 @@ def addRequestAction(vid):
     return redirect("/inventory/vehicle/"+vid)
 
 
+
+
+@app.route('/invoice')
+def pdf_template():
+    rendered = render_template('invoice-template.html')
+    pdf = pdfkit.from_string(rendered, False)
+
+    response = make_response(pdf)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'inline; filename=output.pdf'
+
+    return response
+
+@app.route('/<id>/<token>')
+def customerInfo(id, token):
+    response = adminUI.viewRequest(id)
+    if ((response['data'].token == token) and response['status']):
+        return render_template("customer-info.html", request=response['data'], vehicle=response['data'].vehicle, customer=response['data'].customer, tokenValid=response['data'].tokenValid)
+    return render_template("customer-info.html", tokenValid=False)
+
+@app.route('/submit/<id>/<token>',methods=['GET', 'POST'])
+def submitCustomerInfo(id, token):
+    if (request.method == 'POST'):
+        response = adminUI.viewRequest(id)
+        print(response)
+        if ((response['data'].token == token) and response['status']):
+            
+            response = adminUI.addCustomerAddress(request.form['first-name'], request.form['last-name'], request.form['addr1'], request.form['addr2'], request.form['addr3'], request.form['parish'], response['data'])
+            
+            if (response['status']):
+                print("Success")
+                return render_template("customer-info.html", submit = True)
+    
+    return render_template("customer-info.html", submit = False)
 
 
 if __name__ == "__main__": 

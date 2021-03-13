@@ -1,5 +1,6 @@
 from Persistence.DatabaseManager import DatabaseManager
 from Business.Vehicle import Vehicle
+from firebase_admin import firestore
 
 
 
@@ -13,15 +14,10 @@ class InventoryManager:
         return self.db.write(vehicle.id, vehicle)
 
     def addImagesToVehicle(self, vid, imgSrc, imgDes):
-        vehicle = self.getVehicle(vid)
-        if (vehicle['status']):
-            image = self.db.storeFile(imgSrc, imgDes)
-
-            if (image['status']):
-                vehicle['data'].addImage(image['data'])
-                response = self.db.update(vid, vehicle['data'].__dict__)
-                print(response)
-                return True
+        image = self.db.storeFile(imgSrc, imgDes)
+        if (image['status']):
+            response = self.db.update(vid, {u'images': firestore.ArrayUnion([u''+ image['data']])})
+            return True
         return False
 
     def resetQuery(self):

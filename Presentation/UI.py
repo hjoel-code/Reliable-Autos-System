@@ -20,8 +20,6 @@ class UI:
     def filterInventory(self, make, model, bType, trans, minYear, maxYear):
         self.inventory.resetQuery()
 
-        print(make, model, bType, trans, minYear, maxYear)
-
         None if make=="" else self.inventory.addFilter("make","==",make)
         None if model=="" else self.inventory.addFilter("model","==",model)
         None if trans=="" else self.inventory.addFilter("trans","==",trans)
@@ -70,4 +68,6 @@ class AdminUI(UI):
     def addNewAdministrator(self):
         pass
 
+    def addCustomerAddress(self, fName, lName, addr1, addr2, addr3, parish, request):
+        return self.request.addAddress(fName, lName, addr1, addr2, addr3, parish, request)
 

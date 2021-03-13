@@ -47,5 +47,10 @@ class Vehicle:
         self.description = obj['description']
         self.id = obj['id']
         self.images = obj['images']
+
+        if (len(self.images) > 1 and self.images[0] == "https://firebasestorage.googleapis.com/v0/b/javvy-s-autozone.appspot.com/o/assets%2Fno-image.jpg?alt=media&token=5eba1699-aff8-4206-bca5-2a591597d179"):
+            del self.images[0]
+        
+
         self.displayImage = self.images[0]
         self.vehicleStatus = obj['vehicleStatus']

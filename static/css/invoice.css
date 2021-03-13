@@ -1,0 +1,29 @@
+
+@import "https://fonts.googleapis.com/css?family=Roboto|Roboto Condensed|Roboto Mono|Fira Sans|Nunito|Didact Gothic";
+
+main.page {
+    background: white;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 0.5cm;
+    box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+main.page[size="letter"] {
+    height: 28cm;
+    width: 22cm;
+}
+
+.company-logo {
+    width: 15px;
+    height: 100%;
+}
+
+.company-name {
+    font-family: Nunito;
+    font-size: 18px;
+    font-weight: 500;
+    color: rgb(56, 111, 173);
+}

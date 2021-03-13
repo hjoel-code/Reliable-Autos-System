@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reliable Autos</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/login.css') }}">
+    <style>
+        .c-title {
+            font-size: 24pt;
+            color: rgb(83, 83, 83);
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+
+        .c-image img {
+            width: 120px;
+            height: auto;
+            padding: 10px;
+            margin-left: 10%;
+        }
+
+        .c-content p.content {
+            font-size: 14pt;
+            color: rgb(83, 83, 83);
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="loader fixed-top">
+        <div class="bar"></div>
+    </div>
+    <div class="container-fluid">
+        <div class="row no-gutter">
+            <div class="col-lg-5 col-xl-5 col-md-5 col-sm-0 d-none d-md-flex img-col">
+            </div>
+            <div class="col-lg-7 col-xl-7 col-md-7 col-sm-12 main-col">
+                {% if tokenValid %}
+                <div class="login-column">
+                    <div class="login-mod">
+                        <div class="login-head text-center">
+                            Reliable Autos: <b>{{ vehicle.getTitle() }}</b> Request
+                        </div>
+                        <form action="/submit/{{request.id}}/{{request.token}}" method="POST">
+                            <div class="input-group py-2">
+                                <input type="text" class="form-control" placeholder="First Name" required name='first-name' value="{{customer.fName}}">
+                                <input type="text" class="form-control" placeholder="Last Name" required name="last-name" value="{{customer.lName}}">
+                            </div>
+                            <div class="input-group py-2">
+                                <input type="text" class="form-control" placeholder="Address Line 1" required name='addr1'>
+                            </div>
+                            <div class="input-group py-2">
+                                <input type="text" class="form-control" placeholder="Address Line 2" required name='addr2'>
+                            </div>
+                            <div class="input-group py-2">
+                                <input type="text" class="form-control" placeholder="Address Line 3 (Optional)" name='addr3'>
+                            </div>
+                            <div class="input-group py-2">
+                                <input type="text" class="form-control" placeholder="Parish" required name='parish'>
+                            </div>
+                            <button type="submit" class="btn btn-login">Submit
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                {% elif submit %}
+                <div class="login-column">
+                    <div class="login-mod">
+                        <div class="c-title">Information Sent</div>
+                        <div class="c-content">
+                            <div class="c-image">
+                                <img src="https://firebasestorage.googleapis.com/v0/b/javvy-autozone.appspot.com/o/logo%2Fclipart1795386.png?alt=media&token=5afd5b3d-cf54-4c52-bfe4-1d9040540a23">
+                            </div>
+                            <p class="content">
+                                Your information was successfully sent. <br>Thank You for making it Reliable Autos where we drive excitement towards your future.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="login-column">
+                    <div class="login-mod">
+                        <div class="c-title">Invalid Token</div>
+                        <div class="c-content">
+                            <div class="c-image">
+                                <img src="https://firebasestorage.googleapis.com/v0/b/javvy-autozone.appspot.com/o/logo%2FPaomedia-Small-N-Flat-Sign-delete.ico?alt=media&token=387b834d-ede3-49d9-965a-c9b5f854ba9e">
+                            </div>
+                            <p class="content">
+                                Your token has expired or has already been used. <br>Thank You for making it Reliable Autos where we drive excitement towards your future.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

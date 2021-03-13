@@ -3,6 +3,11 @@ from datetime import datetime
 from Business.Vehicle import Vehicle
 from Business.Customer import Customer 
 
+import random
+
+def random_char(y):
+    alph = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+    return ''.join(random.choice(alph) for x in range(y))
 
 
 class RequestType(enum.Enum):
@@ -17,6 +22,9 @@ class Request:
         self.requestType = RequestType(int(requestType)).__dict__['_name_']
         self.timeStamp = datetime.now()
         self.requestOpt = ""
+        self.token = random_char(6) + '-' + random_char(6) + '-' + random_char(6) + '-' + random_char(6) 
+        self.tokenValid = True
+        self.id = random_char(20)
 
     def addRequestOpt(self, request):
         self.requestOpt = request
@@ -37,11 +45,13 @@ class Request:
         self.vehicle = self.vehicle.__dict__
         return self
 
-    def toObject(self, obj, id):
-        self.id = id
+    def toObject(self, obj):
+        self.id = obj['id']
         self.requestType = obj['requestType']
         self.timeStamp = obj['timeStamp']
         self.requestOpt = obj['requestOpt']
+        self.token = obj['token']
+        self.tokenValid = obj['tokenValid']
         
         self.vehicle = Vehicle()
         self.vehicle.toObject(obj['vehicle'])

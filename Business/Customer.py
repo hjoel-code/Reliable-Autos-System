@@ -25,10 +25,8 @@ class Customer:
         return self.email
 
     def toDict(self):
-        try:
-            self.address.__dict__
-        except:
-            pass
+        if (self.address != None):
+            self.address = self.address.__dict__
         return self
 
     def toObject(self, obj):

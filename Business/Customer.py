@@ -2,7 +2,7 @@ from Business.Address import Address
 
 class Customer:
     #Constructor to initialise customer
-    def __init__(self, fName, lName, email):
+    def __init__(self, fName='', lName='', email=''):
         self.fName = fName
         self.lName = lName
         self.email = email
@@ -27,6 +27,7 @@ class Customer:
     def toDict(self):
         if (self.address != None):
             self.address = self.address.__dict__
+        
         return self
 
     def toObject(self, obj):

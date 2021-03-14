@@ -59,10 +59,26 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="col">Required Doc</th>
+                                <th scope="col">
+                                    {% if request.invoice == '' %}
+                                            Required Document
+                                    {% else %}
+                                            Generated Invoice ID
+                                    {% endif %}
+                                </th>
                                 <td>
                                     {% if request.requestType == "purchase" %}
-                                    <a class="btn btn-sm btn-secondary" href="#">Generate Invoice for Purchase</a>
+                                        {% if request.invoice == '' %}
+                                            {% if request.tokenValid %}
+                                            <span data-trigger='hover' data-toggle="popover" data-content="Before attempting to generate an invoice. All pre-requisites have to be completed">
+                                                <a class="btn btn-sm btn-secondary disabled"  href="#">Generate Invoice for Purchase</a>
+                                            </span>
+                                            {% else %}      
+                                                <a class="btn btn-sm btn-secondary"  href=" /admin/invoice-request/{{ request.id }}">Generate Invoice for Purchase</a>
+                                            {% endif %}
+                                        {% else %}
+                                            <a href="/admin/invoice/{{ request.invoice }}">{{ request.invoice }}</a>
+                                        {% endif %}
                                     {% elif request.requestType == "moreinfo" %}
                                     <a class="btn btn-sm btn-secondary" href="#">Generate Vehicle Document</a>
                                     {% else %}
@@ -83,5 +99,11 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     
+
+    <script>
+        $(function() {
+            $('[data-toggle="popover" ] ').popover();
+        });
+    </script>
 </body>
 </html>

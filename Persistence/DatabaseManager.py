@@ -120,6 +120,20 @@ class DatabaseManager:
         
         return response
 
+    def getCollectionCount(self):
+        response = {
+            "status": False,
+            "error": None,
+            "data": None
+        }
+
+        try:
+            response["data"] = len(self.collection.get())
+            response["status"] = True
+        except Exception as error:
+            response["error"] = error
+        return response
+
     def addQuery(self, field, operator, value):
         response = {
             "status" : False,

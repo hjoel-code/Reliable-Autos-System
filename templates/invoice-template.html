@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>{{ title }}</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -98,16 +98,15 @@
         <div class="row px-3">
             <div class="col-4">
                 <div class="s-title">Date</div>
-                <!-- {# invoice.data #} -->
-                Janauary 12, 2019
+                {{ invoice.getDate() }}
             </div>
             <div class="col-4">
                 <div class="s-title">To</div>
-                <!-- {# customer.name #} -->Joel Henry<br> 
-                <!-- {# customer.address #} <br> -->
+                {{ invoice.customer.getFullName() }}<br> 
+                {{ invoice.customer.getAddress() }}
             </div>
             <div class="col-4">
-                <div class="s-title">Invoice No. 1001</div>
+                <div class="s-title">Invoice No. {{ invoice.id }}</div>
             </div>
         </div>
 
@@ -126,38 +125,38 @@
                 <tbody>
                   <tr>
                     <td>1</td>
-                    <td>2019 Nissan Sylphy</td>
+                    <td>{{ invoice.vehicle.getTitle() }}</td>
                     <td></td>
-                    <td>$2,000,000.00</td>
+                    <td>{{ invoice.vehicle.getPrice() }}</td>
                   </tr>
                   <tr>
                     <td></td>
                     <td>Colour: </td>
-                    <td>White</td>
+                    <td>{{ invoice.vehicle.colour }}</td>
                     <td></td>
                   </tr>
                   <tr>
                     <td></td>
                     <td>Chassis No: </td>
-                    <td>JWDJ239DK23DK9DDO23KODO</td>
+                    <td>{{ invoice.vehicle.id }}</td>
                     <td></td>
                   </tr>
                   <tr>
                     <td></td>
                     <td>Engine No: </td>
-                    <td>JWDJ239DK23DK9DDO23KODO</td>
+                    <td>{{ invoice.vehicle.engineNumber }}</td>
                     <td></td>
                   </tr>
                   <tr>
                     <td></td>
                     <td>Mileage: </td>
-                    <td>12,000 MI</td>
+                    <td>{{ invoice.vehicle.getMileage() }}</td>
                     <td></td>
                   </tr>
                   <tr>
                     <td></td>
                     <td>Body Type: </td>
-                    <td>Sedan</td>
+                    <td>{{ invoice.vehicle.bodyType }}</td>
                     <td></td>
                   </tr>
 
@@ -168,19 +167,19 @@
                     <td></td>
                   </tr>
                   <tr>
-                    <td>1</td>
+                    <td></td>
                     <td>Additional Expenses</td>
                     <td></td>
                     <td></td>
                   </tr>
-
+                  {% for expense in invoice.expense %}
                   <tr>
                     <td></td>
                     <td></td>
-                    <td>Alarm Installation</td>
-                    <td>$2,500.00</td>
+                    <td>{{ expense.title }}</td>
+                    <td>{{ expense.getAmount() }}</td>
                   </tr>
-
+                  {% endfor %}
                   <tr>
                     <td></td>
                     <td><p class="empty-row p-0 m-0"> Empty</p></td>
@@ -188,25 +187,21 @@
                     <td></td>
                   </tr>
                   <tr>
-                    <td>1</td>
+                    <td></td>
                     <td>Discounts</td>
                     <td></td>
                     <td></td>
                   </tr>
 
+                  {% for discount in invoice.discount %}
                   <tr>
                     <td></td>
                     <td></td>
-                    <td>Christmas Special</td>
-                    <td>- $20,500.00</td>
+                    <td>{{ discount.title }}</td>
+                    <td>- {{ discount.getAmount() }}</td>
                   </tr>
+                  {% endfor %}
 
-                  <tr>
-                    <td></td>
-                    <td><p class="empty-row p-0 m-0"> Empty</p></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
                   <tr>
                     <td></td>
                     <td><p class="empty-row p-0 m-0"> Empty</p></td>
@@ -217,13 +212,13 @@
                     <td></td>
                     <td></td>
                     <td>Subtotal</td>
-                    <td>$ 3,000,000.00</td>
+                    <td>{{ invoice.getSubTotal() }}</td>
                   </tr>
                   <tr>
                     <td></td>
                     <td></td>
                     <td>Sales Tax (GCT)</td>
-                    <td>$ 100,000.00</td>
+                    <td>{{ invoice.getTax() }}</td>
                   </tr>
                   <tr>
                     <td></td>
@@ -235,7 +230,7 @@
                     <td></td>
                     <td></td>
                     <td>Total</td>
-                    <td>$ 3,100,000.00</td>
+                    <td>{{ invoice.getTotal() }}</td>
                   </thead>
                 </tbody>
               </table>
@@ -247,7 +242,7 @@
                 <p class="p-0 m-0">Mr. James O'Bryan (Sales Manager)</p>
             </div>
             <div class="col-6">
-                <p class="s-title p-0 m-0 text-right">Thanks you for youur business!</p>
+                <p class="s-title p-0 m-0 text-right">Thanks you for your business!</p>
             </div>
         </div>
 

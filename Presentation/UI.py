@@ -61,9 +61,18 @@ class AdminUI(UI):
 
     def filterRequest(self):
         pass
+    
+    def addInvoice(self, request):
+        return self.invoice.addInvoice(request)
 
-    def generateInvoice(self):
-        pass
+    def addInvoiceExpense(self, id, title, expense):
+        return self.invoice.addExpense(id, title, expense)
+
+    def addInvoiceDiscount(self, id, title, discount):
+        return self.invoice.addExpense(id, title, discount)
+
+    def generateInvoice(self, id):
+        return self.invoice.getInvoice(id)
 
     def addNewAdministrator(self):
         pass

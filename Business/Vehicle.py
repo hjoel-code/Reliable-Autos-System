@@ -21,6 +21,9 @@ class Vehicle:
         self.description = description
         self.id = chassis 
 
+    def getMileage(self):
+        return self.mileage
+
     def addImage(self, image):
         if (self.images[0] == "https://firebasestorage.googleapis.com/v0/b/javvy-s-autozone.appspot.com/o/assets%2Fno-image.jpg?alt=media&token=5eba1699-aff8-4206-bca5-2a591597d179"):
             self.images = []

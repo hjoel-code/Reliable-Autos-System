@@ -22,9 +22,10 @@ class Request:
         self.requestType = RequestType(int(requestType)).__dict__['_name_']
         self.timeStamp = datetime.now()
         self.requestOpt = ""
-        self.token = random_char(6) + '-' + random_char(6) + '-' + random_char(6) + '-' + random_char(6) 
+        self.token = random_char(8) + '-' + random_char(8) + '-' + random_char(8) + '-' + random_char(8) 
         self.tokenValid = True
         self.id = random_char(20)
+        self.invoice = ''
 
     def addRequestOpt(self, request):
         self.requestOpt = request
@@ -52,6 +53,7 @@ class Request:
         self.requestOpt = obj['requestOpt']
         self.token = obj['token']
         self.tokenValid = obj['tokenValid']
+        self.invoice = obj['invoice']
         
         self.vehicle = Vehicle()
         self.vehicle.toObject(obj['vehicle'])

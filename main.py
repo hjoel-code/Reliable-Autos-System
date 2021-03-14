@@ -197,16 +197,61 @@ def addRequestAction(vid):
 
 
 
-@app.route('/invoice')
-def pdf_template():
-    rendered = render_template('invoice-template.html')
-    pdf = pdfkit.from_string(rendered, False)
+@app.route('/admin/invoice-request/<id>')
+def generateInvoiceFromRequest(id):
+    response = adminUI.viewRequest(id)
+    if (response['status']):
+        if (response['data'].invoice == ''):
+            response = adminUI.addInvoice(response['data'])
+            if (response['status']):
+                adminUI.request.updateRequestField(id,'invoice',response['data'])
+                response = adminUI.generateInvoice(response['data'])
+                rendered = render_template('invoice-template.html', invoice = response['data'], title = 'Invoice No. ' + response['data'].id)
+                pdf = pdfkit.from_string(rendered, False)
 
-    response = make_response(pdf)
-    response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] = 'inline; filename=output.pdf'
+                responseHttp = make_response(pdf)
+                responseHttp.headers['Content-Type'] = 'application/pdf'
+                responseHttp.headers['Content-Disposition'] = 'inline; filename=Invoice No. ' + response['data'].id + '.pdf'
 
-    return response
+                return responseHttp
+
+    return '', 404
+
+@app.route('/admin/invoice/<id>')
+def generateInvoice(id):
+    response = adminUI.generateInvoice(id)
+
+    if (response['status']):
+
+        rendered = render_template('invoice-template.html', invoice = response['data'], title = 'Invoice No. ' + response['data'].id)
+        pdf = pdfkit.from_string(rendered, False)
+
+        responseHttp = make_response(pdf)
+        responseHttp.headers['Content-Type'] = 'application/pdf'
+        responseHttp.headers['Content-Disposition'] = 'inline; filename=Invoice No. ' + response['data'].id + '.pdf'
+
+        return responseHttp
+
+    return '', 404
+
+
+@app.route('/admin/invoice-expense/<id>', methods=['GET', 'POST'])
+def addExpenseToInvoiceAction(id):
+    if request == 'POST':
+        response = adminUI.addInvoiceExpense(id, request.form['title'], request.form['amount'])
+
+        if (response):
+            return '',200
+    return '',400
+
+@app.route('/admin/invoice-discount/<id>', methods=['GET', 'POST'])
+def addDiscountToInvoiceAction(id):
+    if request == 'POST':
+        response = adminUI.addInvoiceDiscount(id, request.form['title'], request.form['amount'])
+
+        if (response):
+            return '',200
+    return '',400
 
 @app.route('/<id>/<token>')
 def customerInfo(id, token):

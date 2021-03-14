@@ -59,4 +59,7 @@ class RequestManager:
         request.tokenValid = False
         request.toDict()
         return self.db.update(request.id, request.__dict__ )
-        
+    
+
+    def updateRequestField(self, id, field, val):
+        return self.db.update(id, {u''+field : u''+val})

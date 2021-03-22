@@ -6,19 +6,19 @@ from Business.Customer import Customer
 class Discount:
     def __init__(self, title, amount):
         self.title = title
-        self.amount = amount
+        self.amount = int(amount)
 
     def getAmount(self):
-        return self.amount
+        return "${:,.2f}".format(float(self.amount))
 
 
 class Expense:
     def __init__(self, title, amount):
         self.title = title
-        self.amount = amount
+        self.amount = int(amount)
 
     def getAmount(self):
-        return self.amount
+        return "${:,.2f}".format(float(self.amount))
 
 
 class Invoice:
@@ -58,14 +58,14 @@ class Invoice:
         summ = 0
         for i in self.discount:
             summ+= i.amount
-        return summ
+        return int(summ)
         
 
     def getTotalExpence(self):
        total = 0
        for x in self.expense:
             total += x.amount
-       return total
+       return int(total)
         
 
     def getDate(self):

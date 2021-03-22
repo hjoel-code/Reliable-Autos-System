@@ -21,23 +21,35 @@ class InvoiceManager:
     def addExpense(self,id,title,expense):
         invoice = Invoice()
         invoice.addExpense(title, expense)
-        response = self.db.update(id, {u'expense': firestore.ArrayUnion([u''+ invoice.expense[0].__dict__])})
+        response = self.db.update(id, {u'expense': firestore.ArrayUnion([invoice.expense[0].__dict__])})
         
         return True if response['status'] else False
 
     def addDiscount(self,id,title,discount):
         invoice = Invoice()
         invoice.addDiscount(title, discount)
-        response = self.db.update(id, {u'discount': firestore.ArrayUnion([u''+ invoice.discount[0].__dict__])})
+        response = self.db.update(id, {u'discount': firestore.ArrayUnion([invoice.discount[0].__dict__])})
         
         return True if response['status'] else False
-
 
     def generateInvoicePDF(self):
         pass
 
     def getAllInvoices(self):
-        pass
+        response = self.db.getCollection()
+
+        if (not response["status"]):
+            response['data'] = []
+            return response
+        
+        data = []
+        for doc in response["data"]:
+            invoice = Invoice()
+            invoice.toObject(doc.to_dict())
+            data.append(invoice)
+
+        response['data'] = data
+        return response
 
     def getInvoice(self, id):
         response = self.db.read(id)

@@ -25,17 +25,18 @@
                         <div class="login-head text-center">
                             Reliable Auto Administrator Sign Up
                         </div>
-                        <form id="sign-form">
+                        {% if form %}
+                        <form action="/admin/auth/sign/new" method="POST">
                             <div class="input-group py-2">
-                                <input type="text" class="form-control" placeholder="First Name" required id='first-name'>
-                                <input type="text" class="form-control" placeholder="Last Name" required id="last-name">
+                                <input type="text" class="form-control" placeholder="First Name" required name='first-name' value="{{form['first-name']}}">
+                                <input type="text" class="form-control" placeholder="Last Name" required name="last-name" value="{{form['last-name']}}">
                             </div>
                             <div class="input-group py-2">
-                                <input type="email" class="form-control" placeholder="email@example.com" required id='email'>
+                                <input type="email" class="form-control" placeholder="email@example.com" required name='email' value="{{form['email']}}">
                             </div>
                             <div class="input-group py-2">
-                                <input type="password" class="form-control password" placeholder="Password" required id="password">
-                                <input type="password" class="form-control password" placeholder="Confirm Password" required id="confirm-password">
+                                <input type="password" class="form-control password" placeholder="Password" required name="password" value="{{form['password']}}">
+                                <input type="password" class="form-control password" placeholder="Confirm Password" required name="confirm-password" value="{{form['confirm-password']}}">
                                 <div class="input-group-append">
                                     <button class="btn make-visible" id="make-visible"><span><i class="fa fa-eye-slash" id="eye-icon"></i></span></button>
                                 </div>
@@ -44,12 +45,54 @@
                                 <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                             </button>
                         </form>
-                        <div class="d-flex justify-content-center"><small class="text-danger p-1 d-none error-message"></small></div>
-
+                        {% else %}
+                        <form action="/admin/auth/sign/new" method="POST">
+                            <div class="input-group py-2">
+                                <input type="text" class="form-control" placeholder="First Name" required name='first-name'>
+                                <input type="text" class="form-control" placeholder="Last Name" required name="last-name">
+                            </div>
+                            <div class="input-group py-2">
+                                <input type="email" class="form-control" placeholder="email@example.com" required name='email'>
+                            </div>
+                            <div class="input-group py-2">
+                                <input type="password" class="form-control password" placeholder="Password" required name="password">
+                                <input type="password" class="form-control password" placeholder="Confirm Password" required name="confirm-password" >
+                                <div class="input-group-append">
+                                    <button class="btn make-visible" id="make-visible"><span><i class="fa fa-eye-slash" id="eye-icon"></i></span></button>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-login">Create Account
+                                <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                            </button>
+                        </form>
+                        {% endif %}
+                        {% if error %}
+                            <div class="d-flex justify-content-center"><small class="text-danger p-1 error-message">{{ error }}</small></div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script>
+    document.getElementById('make-visible').addEventListener('click', e => {
+        e.preventDefault();
+        if ($('#eye-icon').hasClass('fa-eye-slash')) {
+            $('#eye-icon').removeClass('fa-eye-slash');
+            $('#eye-icon').addClass('fa-eye');
+            Array.from(document.querySelectorAll('.password')).forEach(input => {
+                input.type = 'text'
+            })
+        } else {
+            $('#eye-icon').addClass('fa-eye-slash');
+            $('#eye-icon').removeClass('fa-eye');
+            Array.from(document.querySelectorAll('.password')).forEach(input => {
+                input.type = 'password'
+            })
+        }
+    })
+</script>
 </html>

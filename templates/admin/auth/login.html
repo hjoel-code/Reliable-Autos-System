@@ -26,7 +26,7 @@
                         </div>
                         <form id="login-form" action="{{ url_for( 'loginAction') }}" method="POST">
                             <div class="input-group my-4">
-                                <input name="email" type="email" class="form-control" placeholder="email@example.com" required id="email">
+                                <input name="email" type="email" class="form-control" placeholder="email@example.com" required>
                             </div>
                             <div class="input-group my-4">
                                 <input name="password" type="password" class="form-control password" placeholder="Password" required id="password">
@@ -39,12 +39,34 @@
                                 <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                             </button>
                         </form>
-                        <div class="d-flex justify-content-center"><small class="text-danger p-1 d-none error-message">hello this is an error message</small></div>
 
+                        {% if error %}
+                            <div class="d-flex justify-content-center"><small class="text-danger p-1 error-message">Something Ain't Right</small></div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script>
+    document.getElementById('make-visible').addEventListener('click', e => {
+        e.preventDefault();
+        if ($('#eye-icon').hasClass('fa-eye-slash')) {
+            $('#eye-icon').removeClass('fa-eye-slash');
+            $('#eye-icon').addClass('fa-eye');
+            Array.from(document.querySelectorAll('.password')).forEach(input => {
+                input.type = 'text'
+            })
+        } else {
+            $('#eye-icon').addClass('fa-eye-slash');
+            $('#eye-icon').removeClass('fa-eye');
+            Array.from(document.querySelectorAll('.password')).forEach(input => {
+                input.type = 'password'
+            })
+        }
+    })
+</script>
+
 </html>

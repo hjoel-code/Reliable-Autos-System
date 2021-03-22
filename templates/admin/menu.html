@@ -14,7 +14,7 @@
 <body>
     <div class="main-bg"></div>
     <div class="container-fluid">
-        <a class="btn back-btn mr-auto" href="{{ url_for('login') }}">
+        <a class="btn back-btn mr-auto" href="{{ url_for('signout') }}">
             <span><i class="fa fa-sign-out"></i></span> Sign Out
         </a>
         <div class="login-column">
@@ -33,6 +33,7 @@
                         </div>
                         <a href="{{ url_for('inventory') }}" class="menu-item">View Inventory</a>
                         <a href="{{ url_for('viewRequest') }}" class="menu-item">Manage Requests</a>
+                        <a href="{{ url_for('viewInvoices') }}" class="menu-item">Manage Invoices</a>
                         <a href="{{ url_for('signUp') }}" class="menu-item">Add Administrator</a>
                     </div>
                 </div>
@@ -40,9 +41,9 @@
         </div>
     </div>
 
-    {% if success == "add-to-inventory" %}
+    {% if success %}
     <div class="alert alert-success alert-dismissible fade show" role="alert">
-        Successfully Added {{year}} {{make}} {{model}}
+        {{ message }}
         <button type="button" class="close ml-3" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>

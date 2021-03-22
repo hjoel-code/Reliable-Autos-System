@@ -42,6 +42,7 @@ class AdminUI(UI):
         super().__init__()
         self.auth = Authentication()
         self.invoice = InvoiceManager()
+        self.auth  = Authentication()
 
     def addVehicle(self, chassis, make, model, colour, year, trans, bodyType, mileage, engineNumber, price, priceStatus, location, description):
         return self.inventory.addVehicleToInventory(chassis, make, model, colour, year, trans, bodyType, mileage, engineNumber, price, priceStatus, location, description)
@@ -69,14 +70,19 @@ class AdminUI(UI):
         return self.invoice.addExpense(id, title, expense)
 
     def addInvoiceDiscount(self, id, title, discount):
-        return self.invoice.addExpense(id, title, discount)
+        return self.invoice.addDiscount(id, title, discount)
 
     def generateInvoice(self, id):
         return self.invoice.getInvoice(id)
 
-    def addNewAdministrator(self):
-        pass
-
     def addCustomerAddress(self, fName, lName, addr1, addr2, addr3, parish, request):
         return self.request.addAddress(fName, lName, addr1, addr2, addr3, parish, request)
 
+    def viewAllInvoices(self):
+        return self.invoice.getAllInvoices()
+
+    def viewInvoice(self, id):
+        return self.invoice.getInvoice(id)
+
+    def addNewAdministrator(self, firstName, lastName, email, password):
+        return self.auth.signUpUser(firstName, lastName, email, password)

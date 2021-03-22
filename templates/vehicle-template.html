@@ -220,6 +220,29 @@
     <script src="{{ url_for('static',filename='js/yall.min.js') }}"></script>
 
     <script>
+        jQuery(document).ready(function() {
+            $('#vehicle-imgs').royalSlider({
+              fullscreen: {
+                enabled: true,
+                nativeFS: true
+              },
+              controlNavigation: 'thumbnails',
+              thumbs: {
+                orientation: 'vertical',
+                paddingBottom: 2,
+                appendSpan: true
+              },
+              transitionType:'slide',
+              imageScaleMode: 'fit',
+              autoScaleSlider: true, 
+              autoScaleSliderWidth: 960,     
+              autoScaleSliderHeight: 600,
+              loop: true,
+              arrowsNav: false,
+              keyboardNavEnabled: true
+          
+            });
+          });
         yall()
     </script>
 

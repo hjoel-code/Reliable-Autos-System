@@ -6,7 +6,7 @@ from Business.Customer import Customer
 
 class RequestManager:
     def __init__(self):
-        self.db = DatabaseManager('Requests')
+        self.db = DatabaseManager('Reliable-Requests')
 
     def addRequest(self, vid, firstName, lastName, email, requestType, requestOpt):
         customer = Customer(firstName,lastName, email)
@@ -60,6 +60,5 @@ class RequestManager:
         request.toDict()
         return self.db.update(request.id, request.__dict__ )
     
-
     def updateRequestField(self, id, field, val):
         return self.db.update(id, {u''+field : u''+val})

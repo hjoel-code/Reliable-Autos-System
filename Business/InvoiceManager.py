@@ -7,7 +7,7 @@ from firebase_admin import firestore
 class InvoiceManager:
 
     def __init__(self):
-        self.db = DatabaseManager("Invoices")
+        self.db = DatabaseManager("Reliable-Invoices")
 
     def addInvoice(self, request):
         count = self.db.getCollectionCount()
@@ -18,22 +18,19 @@ class InvoiceManager:
                 return {'status':True,'data':invoice.id}
         return count
 
-    def addExpense(self,id,title,expense):
+    def addExpensetoInvoice(self,id,title,expense):
         invoice = Invoice()
         invoice.addExpense(title, expense)
         response = self.db.update(id, {u'expense': firestore.ArrayUnion([invoice.expense[0].__dict__])})
         
         return True if response['status'] else False
 
-    def addDiscount(self,id,title,discount):
+    def addDiscounttoInvoice(self,id,title,discount):
         invoice = Invoice()
         invoice.addDiscount(title, discount)
         response = self.db.update(id, {u'discount': firestore.ArrayUnion([invoice.discount[0].__dict__])})
         
         return True if response['status'] else False
-
-    def generateInvoicePDF(self):
-        pass
 
     def getAllInvoices(self):
         response = self.db.getCollection()

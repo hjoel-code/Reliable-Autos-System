@@ -74,7 +74,7 @@
                                                 <a class="btn btn-sm btn-secondary disabled"  href="#">Generate Invoice for Purchase</a>
                                             </span>
                                             {% else %}      
-                                                <a class="btn btn-sm btn-secondary"  href=" /admin/invoice-request/{{ request.id }}">Generate Invoice for Purchase</a>
+                                                <a class="btn btn-sm btn-secondary"  href=" /admin/invoice-from-request/{{ request.id }}">Generate Invoice for Purchase</a>
                                             {% endif %}
                                         {% else %}
                                             <a href="/admin/invoice-details/{{ request.invoice }}">{{ request.invoice }}</a>

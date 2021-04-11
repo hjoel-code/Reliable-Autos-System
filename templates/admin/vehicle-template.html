@@ -13,7 +13,7 @@
 <body>
     <div class="main-bg"></div>
     <div class="container-fluid">
-        <a class="btn back-btn mr-auto" href="{{ url_for('adminMenu') }}">
+        <a class="btn back-btn mr-auto" href="{{ url_for('updateInventory') }}">
             <span><i class="fa fa-arrow-left"></i></span> Go Back
         </a>
         <div class="login-column">
@@ -51,93 +51,126 @@
 
                         <hr>
 
-
-                        <div class="row px-5 mb-2">
-                            <div class="col-md-6">
-                                <div class="form-group p=0">
-                                    <label for=""><small>Make</small></label>
-                                    <input name="make" type="text" class="form-control form-control-sm" placeholder="{{ vehicle.make }}">
-                                </div>
-                                <div class="form-group">
-                                    <label for=""><small>Model</small></label>
-                                    <input name="model" type="text" class="form-control form-control-sm" placeholder="{{ vehicle.model }}">
-                                </div>
-                                <div class="form-group">
-                                    <label for=""><small>Year</small></label>
-                                    <input name="year" type="number" class="form-control form-control-sm" placeholder="{{ vehicle.year }}">
-                                </div>
-                                <div class="form-group">
-                                    <label for=""><small>Transmission</small></label>
-                                    <select name="trans" type="text" class="form-control form-control-sm" value="{{ vehicle.trans }}">
-                                        <option value="Automatic">Automatic</option>
-                                        <option value="Manual">Manual</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for=""><small>Location</small></label>
-                                    <select name="location" type="text" class="form-control form-control-sm" value="{{ vehicle.location }}">
-                                        <option value="Lot">Lot</option>
-                                        <option value="Transit">Transit</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for=""><small>Body Type</small></label>
-                                    <select name="type" type="text" class="form-control form-control-sm" value="{{ vehicle.bodyType }}">
-                                        <option value="Sedan">Sedan</option>
-                                        <option value="Hatchback">Hatchback</option>
-                                        <option value="SUV">SUV</option>
-                                        <option value="Truck">Truck</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for=""><small>Mileage</small></label>
-                                    <input name="mil" type="number" class="form-control form-control-sm" placeholder="{{ vehicle.mileage }}">
-                                </div>
-                                <div class="form-group">
-                                    <label for=""><small>Engine Number</small></label>
-                                    <input name="engine" type="text" class="form-control form-control-sm" placeholder="{{ vehicle.engineNumber }}">
-                                </div>
-                                <div class="form-group">
-                                    <label for=""><small>Colour</small></label>
-                                    <input name="colour" type="text" class="form-control form-control-sm" placeholder="{{ vehicle.colour }}">
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <hr>
-
-                        <div class="row my-2 px-5">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for=""><small>Price</small></label>
-                                    <input name="price" type="text" class="form-control form-control-md" placeholder="{{ vehicle.price }}">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for=""><small>Price Terms</small></label>
-                                    <select name="priceStatus" type="text" class="form-control form-control-md" value = "{{ vehicle.priceStatus }}">
-                                        <option value="Negotiable">Negotiable</option>
-                                        <option value="Non-Negotiable">Non-Negotiable</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                            <div class="row my-2 px-4">
-                                <div class="col-md-12">
+                        <form action="/submit-changes/vehicle/{{vehicle.id}}" method="post">
+                            <div class="row px-5 mb-2">
+                                <div class="col-md-6">
+                                    <div class="form-group p=0">
+                                        <label for=""><small>Make</small></label>
+                                        <input name="make" type="text" class="form-control form-control-sm" placeholder="{{ vehicle.make }}">
+                                    </div>
                                     <div class="form-group">
-                                        <label for=""><small>Vehicle Description</small></label>
-                                        <textarea placeholder="{{ vehicle.description }}" class="form-control" name="description" cols="30" rows="10"></textarea>
+                                        <label for=""><small>Model</small></label>
+                                        <input name="model" type="text" class="form-control form-control-sm" placeholder="{{ vehicle.model }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for=""><small>Year</small></label>
+                                        <input name="year" type="text" class="form-control form-control-sm" placeholder="{{ vehicle.year }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for=""><small>Transmission</small></label>
+                                        <select name="trans" type="text" class="form-control form-control-sm" value="{{ vehicle.trans }}">
+                                            <option value="Automatic">Automatic</option>
+                                            <option value="Manual">Manual</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for=""><small>Location</small></label>
+                                        <select name="location" type="text" class="form-control form-control-sm" value="{{ vehicle.location }}">
+                                            {% if vehicle.location == "Lot" %}
+                                                <option value="Lot" selected>Lot</option>
+                                                <option value="Transit">Transit</option>
+                                            {% else %}
+                                                <option value="Lot">Lot</option>
+                                                <option value="Transit" selected>Transit</option>
+                                            {% endif %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for=""><small>Body Type</small></label>
+                                        <select name="bodyType" type="text" class="form-control form-control-sm" value="{{ vehicle.bodyType }}">
+                                            {% if vehicle.bodyType == "Sedan" %}
+                                                <option value="Sedan" selected>Sedan</option>
+                                                <option value="Hatchback">Hatchback</option>
+                                                <option value="SUV">SUV</option>
+                                                <option value="Truck">Truck</option>
+                                            {% elif vehicle.bodyType == "Hatchback" %}
+                                                <option value="Sedan">Sedan</option>
+                                                <option value="Hatchback" selected>Hatchback</option>
+                                                <option value="SUV">SUV</option>
+                                                <option value="Truck">Truck</option>
+                                            {% elif vehicle.bodyType == "SUV" %}
+                                                <option value="Sedan">Sedan</option>
+                                                <option value="Hatchback">Hatchback</option>
+                                                <option value="SUV" selected>SUV</option>
+                                                <option value="Truck">Truck</option>
+                                            {% elif vehicle.bodyType == "Truck" %}
+                                                <option value="Sedan">Sedan</option>
+                                                <option value="Hatchback">Hatchback</option>
+                                                <option value="SUV">SUV</option>
+                                                <option value="Truck" selected>Truck</option>
+                                            {% endif %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for=""><small>Mileage</small></label>
+                                        <input name="mileage" type="number" class="form-control form-control-sm" placeholder="{{ vehicle.mileage }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for=""><small>Engine Number</small></label>
+                                        <input name="engineNumber" type="text" class="form-control form-control-sm" placeholder="{{ vehicle.engineNumber }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for=""><small>Colour</small></label>
+                                        <input name="colour" type="text" class="form-control form-control-sm" placeholder="{{ vehicle.colour }}">
                                     </div>
                                 </div>
                             </div>
 
+
+                            <hr>
+                        
+                        
+                            <div class="row my-2 px-5">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for=""><small>Price</small></label>
+                                        <input name="price" type="text" class="form-control form-control-md" placeholder="{{ vehicle.price }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for=""><small>Price Terms</small></label>
+                                        <select name="priceStatus" type="text" class="form-control form-control-md" value = "{{ vehicle.priceStatus }}">
+                                            {% if vehicle.priceStatus == "Negotiable" %}
+                                            <option value="Negotiable" selected>Negotiable</option>
+                                            <option value="Non-Negotiable">Non-Negotiable</option>
+                                            {% else %}
+                                            <option value="Non-Negotiable">Non-Negotiable</option>
+                                            <option value="Negotiable" selected>Negotiable</option>
+                                            {% endif %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="row my-2 px-4">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for=""><small>Vehicle Description</small></label>
+                                            <textarea placeholder="{{ vehicle.description }}" class="form-control" name="description" cols="30" rows="10"></textarea>
+                                        </div>
+                                    </div>
+                            </div>
+
+                            <div class="my-5 ml-5">
+                                <button class="btn btn-success mx-1" type="submit">Save Changes</button>
+                                <a href="{{ url_for('updateInventory') }}" class="btn btn-secondary mx-1">Cancel</a>
+                            </div>
+                        </form>
                         
                     </div>
                 </div>

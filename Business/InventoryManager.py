@@ -5,8 +5,11 @@ from firebase_admin import firestore
 
 
 class InventoryManager:
-    def __init__(self):
-        self.db = DatabaseManager('Inventory')
+    def __init__(self, isPublic = False):
+        self.db = DatabaseManager('Reliable-Inventory')
+        self.isPublic = isPublic
+        if (self.isPublic):
+            self.addFilter('vehicleStatus','==','Available')
 
     def addVehicleToInventory(self, chassis, make, model, colour, year, trans, bodyType, mileage, engineNumber, price, priceStatus, location, description):
         vehicle = Vehicle()
@@ -22,6 +25,9 @@ class InventoryManager:
 
     def resetQuery(self):
         self.db.resetQuery()
+        if (self.isPublic):
+            self.addFilter('vehicleStatus','==','Available')
+        
 
     def addFilter(self, field, operator, value):
         if (value != ""):
@@ -55,7 +61,10 @@ class InventoryManager:
         for doc in response["data"]:
             vehicle = Vehicle()
             vehicle.toObject(doc.to_dict())
-            data.append(vehicle)
+            if (self.isPublic and vehicle.vehicleStatus == "Available"):
+                data.append(vehicle)
+            elif (not self.isPublic):
+                data.append(vehicle)
 
         response['data'] = data
         return response
@@ -76,3 +85,5 @@ class InventoryManager:
     def removeVehicle(self, vehicleID):
         return self.db.remove(vehicleID) 
 
+    def updateVehicleField(self, id, field, val):
+        return self.db.update(id, {u''+field : u''+val})

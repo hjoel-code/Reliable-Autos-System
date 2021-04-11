@@ -85,6 +85,7 @@ class Invoice:
         return self
 
     def toObject(self, doc):
+        print(doc)
         self.id = doc['id']
         self.date = doc['date']
 

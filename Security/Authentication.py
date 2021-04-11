@@ -59,7 +59,6 @@ class Authentication:
         
         return response
 
-
     def signUpUser(self, firstName, lastName, email_new, password_new):
         response = {
             'status': False,

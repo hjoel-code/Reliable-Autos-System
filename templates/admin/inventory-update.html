@@ -39,11 +39,10 @@
                               <tr>
                                 <th>{{ vehicle.getTitle() }}</th>
                                 <td>{{ vehicle.vehicleStatus }}</td>
-                                {% if task == "remove" %}
-                                <td><a href="/admin/inventory/update-remove/{{ vehicle.id }}"><span class="fa fa-trash"></span></a></td>
-                                {% else %}
-                                <td><a href="/admin/inventory/update/{{ vehicle.id }}"><span class="fa fa-edit"></span></a></td>
-                                {% endif %}
+                                <td>
+                                    <a class="mx-2" href="/admin/inventory/update/{{ vehicle.id }}"><span class="fa fa-edit"></span></a>
+                                    <a class="mx-2" href="/admin/inventory/update-remove/{{ vehicle.id }}"><span class="fa fa-trash"></span></a>
+                                </td>
                             </tr>
                               {% endfor %}
                             </tbody>

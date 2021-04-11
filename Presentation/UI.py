@@ -8,7 +8,7 @@ from random import randint
 
 class UI:
     def __init__(self):
-        self.inventory = InventoryManager()
+        self.inventory = InventoryManager(True)
         self.request = RequestManager()
     
     def viewInventory(self):
@@ -43,6 +43,7 @@ class AdminUI(UI):
         self.auth = Authentication()
         self.invoice = InvoiceManager()
         self.auth  = Authentication()
+        self.inventory = InventoryManager()
 
     def addVehicle(self, chassis, make, model, colour, year, trans, bodyType, mileage, engineNumber, price, priceStatus, location, description):
         return self.inventory.addVehicleToInventory(chassis, make, model, colour, year, trans, bodyType, mileage, engineNumber, price, priceStatus, location, description)
@@ -67,10 +68,23 @@ class AdminUI(UI):
         return self.invoice.addInvoice(request)
 
     def addInvoiceExpense(self, id, title, expense):
-        return self.invoice.addExpense(id, title, expense)
+        return self.invoice.addExpensetoInvoice(id, title, expense)
 
     def addInvoiceDiscount(self, id, title, discount):
-        return self.invoice.addDiscount(id, title, discount)
+        return self.invoice.addDiscounttoInvoice(id, title, discount)
+
+    def generateInvoiceFromRequest(self, request_id):
+        response = self.viewRequest(request_id)
+        if (response['status']):
+            request = response['data']
+            if (request.invoice == ''):
+                response = self.addInvoice(response['data'])
+                if (response['status']):
+                    self.inventory.updateVehicleField(request.vehicle.id, 'vehicleStatus', 'Processing')
+                    self.request.updateRequestField(request_id, 'invoice', response['data'])
+                    response = self.generateInvoice(response['data'])
+                    return response
+        return response
 
     def generateInvoice(self, id):
         return self.invoice.getInvoice(id)
@@ -81,8 +95,13 @@ class AdminUI(UI):
     def viewAllInvoices(self):
         return self.invoice.getAllInvoices()
 
-    def viewInvoice(self, id):
-        return self.invoice.getInvoice(id)
-
     def addNewAdministrator(self, firstName, lastName, email, password):
         return self.auth.signUpUser(firstName, lastName, email, password)
+
+    def submitVehicleUpdates(self, vid, updates):
+        print(updates)
+        for key, update in updates.items():
+            print(key, update)
+            if update != "":
+                self.inventory.updateVehicleField(vid, key, update)
+

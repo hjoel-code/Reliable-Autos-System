@@ -27,11 +27,9 @@
                         <div class="menu-item menu-dropdown" data-toggle="collapse" data-target="#updates-menu"> Update Inventory
                             <div class="dropdown-menu-ra collapse pt-2" id="updates-menu">
                                 <a href="{{ url_for('addVehicle') }}" class="menu-item drop">Add to Inventory</a>
-                                <a href="{{ url_for('removeInventory') }}" class="menu-item drop">Remove from Inventory</a>
                                 <a href="{{ url_for('updateInventory') }}"  class="menu-item drop">Edit Vehicle Information</a>
                             </div>
                         </div>
-                        <a href="{{ url_for('inventory') }}" class="menu-item">View Inventory</a>
                         <a href="{{ url_for('viewRequest') }}" class="menu-item">Manage Requests</a>
                         <a href="{{ url_for('viewInvoices') }}" class="menu-item">Manage Invoices</a>
                         <a href="{{ url_for('signUp') }}" class="menu-item">Add Administrator</a>

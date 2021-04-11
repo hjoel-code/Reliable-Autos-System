@@ -70,9 +70,6 @@ def adminMenu():
     return redirect(url_for('login'))
 
 
-
-
-
 @app.route('/admin/add-to-inventory')
 def addVehicle():
     if (auth.isUser):
@@ -117,28 +114,8 @@ def addImagesAction(vid):
             print('Wrong File Type')
             return "Wrong File Type", 400
 
-@app.route('/admin/inventory')
-def inventory():
-    if (auth.isUser):
-        inventory = adminUI.viewInventory()
-
-        if (inventory["status"]):
-            return render_template("admin/inventory.html", count = len(inventory['data']), inventory = inventory["data"])
-        return render_template("admin/inventory.html", error = True, message = "")
-    return redirect(url_for('login'))
 
 
-
-
-@app.route('/admin/inventory/update-remove')
-def removeInventory():
-    if (auth.isUser):
-        inventory = adminUI.viewInventory()
-
-        if (inventory["status"]):
-            return render_template("admin/inventory-update.html", inventory = inventory["data"], task = "remove")
-        return render_template("admin/inventory-update.html", error = True, message = "", task = "remove")
-    return redirect(url_for('login'))
 
 @app.route('/admin/inventory/update')
 def updateInventory():
@@ -208,7 +185,7 @@ def viewInvoices():
 @app.route('/admin/invoice-details/<id>')
 def invoiceDetails(id):
     if auth.isUser :
-        response = adminUI.viewInvoice(id)
+        response = adminUI.generateInvoice(id)
 
         if (response['status']):
             return render_template("admin/invoice.html", invoice = response['data'])
@@ -229,18 +206,12 @@ def addDiscountAction(id):
         return redirect(request.host_url+'admin/invoice-details/'+id, 301)
     return '',400
 
-@app.route('/admin/invoice-request/<id>')
-def generateInvoiceFromRequest(id):
+@app.route('/admin/invoice-from-request/<request_id>')
+def generateInvoiceFromRequest(request_id):
     if (auth.isUser):
-        response = adminUI.viewRequest(id)
+        response = adminUI.generateInvoiceFromRequest(request_id)
         if (response['status']):
-            if (response['data'].invoice == ''):
-                response = adminUI.addInvoice(response['data'])
-                if (response['status']):
-                    adminUI.request.updateRequestField(id,'invoice',response['data'])
-                    response = adminUI.generateInvoice(response['data'])
-                    return redirect('/admin/invoice-details/' + response['data'].id, 301)
-
+            return redirect('/admin/invoice-details/' + response['data'].id, 301)
         return '', 404
     return redirect(url_for('login'))
 
@@ -312,6 +283,7 @@ def addRequestAction(vid):
 
 
 
+
 @app.route('/<id>/<token>')
 def customerInfo(id, token):
     response = adminUI.viewRequest(id)
@@ -334,6 +306,13 @@ def submitCustomerInfo(id, token):
     
     return render_template("customer-info.html", submit = False)
 
+
+@app.route('/submit-changes/vehicle/<vid>', methods=['GET', 'POST'])
+def submitVehicleEdits(vid):
+    if (request.method == 'POST'):
+        adminUI.submitVehicleUpdates(vid, request.form)
+        return redirect(url_for("updateInventory"))
+    return '', 400
 
 if __name__ == "__main__": 
     app.secret_key = "AIzaSyBrZVMANrVDDLuqYJktyTDolrDsSDNyZHc"

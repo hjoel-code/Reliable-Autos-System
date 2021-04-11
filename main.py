@@ -35,15 +35,19 @@ def loginAction():
     if (request.method == 'POST'):
         response = auth.signIn(request.form['email'], request.form['password'])
         if (response['status']):
+            flash("WELCOME BACK " + auth.user.getDisplayName())
             return redirect(url_for('adminMenu'))
         else:
-            return render_template("admin/auth/login.html", error = response['error'])
+            flash("Error: Something went wrong")
+            return redirect(url_for('login'))
+    flash("Error: Something went wrong")
     return redirect(url_for('login'))
 
 @app.route('/admin/auth/signUp')
 def signUp():
     if (auth.isUser):
         return render_template("admin/auth/signUp.html")
+    flash("Error: Registered Users Only")
     return redirect(url_for('login'))
 
 @app.route('/admin/auth/sign/new', methods =['GET', 'POST'])
@@ -53,20 +57,22 @@ def signUpAction():
             if (request.form['password'] == request.form['confirm-password']):
                 response = adminUI.addNewAdministrator(request.form['first-name'], request.form['last-name'], request.form['email'], request.form['password'])
             else:
-                return render_template("admin/auth/signUp.html", error = "Password Doesn't Match", form = request.form)
+                flash("Error: Password doesn't match")
+                return render_template("admin/auth/signUp.html", form = request.form)
             
             if (response['status']):
-                return redirect(url_for('adminMenu', __METHOD_OVERRIDE__ = 'POST', success=True, message = 'New Administrator Successfully Added'))
-            return render_template("admin/auth/signUp.html", error = response['error'], form = request.form)
-
+                flash("New administrator successfully added")
+                return redirect(url_for('adminMenu'))
+            flash("Error: Something went wrong")
+            return render_template("admin/auth/signUp.html", form = request.form)
+    flash("Error: Registered Users Only")
     return redirect(url_for('login'))
 
 @app.route('/admin/menu', methods = ['GET', 'POST'])
 def adminMenu():
     if (auth.isUser):
-        if (request.method == 'POST'):
-            print(request.form['success'], request.form['message'])
         return render_template("admin/menu.html", name = auth.user.getDisplayName(), success = None, message = '')
+    flash("Error: Registered Users Only")
     return redirect(url_for('login'))
 
 
@@ -74,6 +80,7 @@ def adminMenu():
 def addVehicle():
     if (auth.isUser):
         return render_template('admin/add-to-inventory.html')
+    flash("Error: Registered Users Only")
     return redirect(url_for('login'))
 
 @app.route('/admin/add-to-inventory/upload', methods=['GET', 'POST'])
@@ -84,10 +91,13 @@ def addVehicleAction():
             response = adminUI.addVehicle(request.form['chassis'], request.form['make'], request.form['model'], request.form['colour'], request.form['year'], request.form['trans'], request.form['type'], request.form['mil'],request.form['engine'], request.form['price'], request.form['priceStatus'], request.form['location'], request.form['description']) 
             
             if (response["status"]):
-                return render_template("admin/img-upload-template.html", vid = request.form['chassis'], success = "add-to-inventory", make = request.form['make'], model = request.form['model'], year = request.form['year'])
-
-            return render_template(url_for('addVehicle'), error = True, message = "")
-        return  render_template(url_for('addVehicle'), error = True, message = "")
+                flash("Successfully added "+request.form['make']+" "+request.form['model']+" "+request.form['year'])
+                return render_template("admin/img-upload-template.html", vid = request.form['chassis'])
+            flash("Error: Failed to Add Vehicle to Inventory")
+            return render_template(url_for('addVehicle'))
+        flash("Error: Failed to Add Vehicle to Inventory")
+        return  render_template(url_for('addVehicle'))
+    flash("Error: Registered Users Only")
     return redirect(url_for('login'))
 
 def allowed_file(filename):
@@ -98,20 +108,20 @@ def addImagesAction(vid):
     if request.method == 'POST':
 
         if 'file' not in request.files:
-            print('No file part')
+            flash('Error: No file part')
             return "No file", 400
 
         img = request.files['file']
 
         if img.filename == '':
-            print('No selected file')
+            flash('Error: No selected file')
             return "No selected file", 400
 
         if img and allowed_file(img.filename):
-            print('File successfully uploaded') if adminUI.addImages(vid, img) else print("Failed to upload Image") 
+            flash('File successfully uploaded') if adminUI.addImages(vid, img) else flash("Error: Failed to upload Image") 
             return "Successfully Uploaded", 200
         else:
-            print('Wrong File Type')
+            flash('Error: Wrong File Type')
             return "Wrong File Type", 400
 
 
@@ -124,7 +134,9 @@ def updateInventory():
 
         if (inventory["status"]):
             return render_template("admin/inventory-update.html", inventory = inventory["data"], task = "edit")
-        return render_template("admin/inventory-update.html", error = True, message = "", task = "edit")
+        flash("Error: Failed to load Inventory")
+        return render_template("admin/inventory-update.html")
+    flash("Error: Registered Users Only")
     return redirect(url_for('login'))
 
 @app.route('/admin/inventory/update-remove/<vid>')
@@ -133,8 +145,11 @@ def removeVehicle(vid):
         response = adminUI.removeVehicle(vid)
 
         if (response["status"]):
-            return redirect(url_for('removeInventory'))
-        return render_template("admin/inventory-update.html", error = True, count = len(inventory['data']), inventory = inventory["data"], task = "remove", success = "remove-success")
+            flash("Successfully Removed")
+            return redirect(url_for('updateInventory'))
+        flash("Error: Failed to remove vehicle from Inventory")
+        return redirect(url_for('updateInventory'))
+    flash("Error: Registered Users Only")
     return redirect(url_for('login'))
 
 @app.route('/admin/inventory/update/<vid>')
@@ -144,8 +159,9 @@ def editVehicle(vid):
 
         if (response["status"]):
             return render_template('admin/vehicle-template.html', vehicle = response['data'])
-        
+        flash("Error: Failed to load Vehicle Information")
         return redirect(url_for('updateInventory'))
+    flash("Error: Registered Users Only")
     return redirect(url_for('login'))
 
 
@@ -159,7 +175,9 @@ def viewRequest():
 
         if (response["status"]):
             return render_template("admin/all-requests.html", requests = response['data'], count = len(response['data']))
+        flash("Error: Failed to load request")
         return render_template(url_for('adminMenu'))
+    flash("Error: Registered Users Only")
     return redirect(url_for('login'))
 
 @app.route('/admin/request/<id>')
@@ -169,7 +187,9 @@ def requestDetails(id):
 
         if (response['status']):
             return render_template("admin/request-template.html", request = response['data'])
+        flash("Error: Failed to load Request ("+id+")")
         return render_template(url_for('viewRequest'))
+    flash("Error: Registered Users Only")
     return redirect(url_for('login'))
 
 @app.route('/admin/invoice')
@@ -179,7 +199,9 @@ def viewInvoices():
 
         if (response["status"]):
             return render_template("admin/all-invoices.html", invoices = response['data'], count = len(response['data']))
+        flash("Error: Failed to load Invoices")
         return render_template(url_for('adminMenu'))
+    flash("Error: Registered Users Only")
     return redirect(url_for('login'))
 
 @app.route('/admin/invoice-details/<id>')
@@ -189,30 +211,40 @@ def invoiceDetails(id):
 
         if (response['status']):
             return render_template("admin/invoice.html", invoice = response['data'])
+        
+        flash("Error: Failed to load Invoice")
         return render_template(url_for('viewInvoices'))
+    flash("Error: Registered Users Only")
     return redirect(url_for('login'))
 
 @app.route('/add-exp/<id>', methods = ['GET', 'POST'])
 def addExpenseAction(id):
     if (request.method == 'POST'):
         response = adminUI.addInvoiceExpense(id, request.form['title'], request.form['amount'])
+        flash("Expense Successfully added")
         return redirect(request.host_url+'admin/invoice-details/'+id, 301)
-    return '',400
+    flash("Error: Failed to add Expense")
+    return redirect(request.host_url+'admin/invoice-details/'+id, 301)
 
 @app.route('/add-disc/<id>', methods = ['GET', 'POST'])
 def addDiscountAction(id):
     if (request.method == 'POST'):
         response = adminUI.addInvoiceDiscount(id, request.form['title'], request.form['amount'])
+        flash("Discount Successfully added")
         return redirect(request.host_url+'admin/invoice-details/'+id, 301)
-    return '',400
+    flash("Error: Failed to add Discount")
+    return redirect(request.host_url+'admin/invoice-details/'+id, 301)
 
 @app.route('/admin/invoice-from-request/<request_id>')
 def generateInvoiceFromRequest(request_id):
     if (auth.isUser):
         response = adminUI.generateInvoiceFromRequest(request_id)
         if (response['status']):
+            flash("Successfully Generated Invoice")
             return redirect('/admin/invoice-details/' + response['data'].id, 301)
+        flash("Error: Failed to Generated Invoice")
         return '', 404
+    flash("Error: Registered Users Only")
     return redirect(url_for('login'))
 
 @app.route('/admin/invoice/<id>')
@@ -232,6 +264,7 @@ def generateInvoice(id):
             return responseHttp
 
         return '', 404
+    flash("Error: Registered Users Only")
     return redirect(url_for('login'))
 
 
@@ -278,7 +311,9 @@ def viewVehicle(vid):
 def addRequestAction(vid):
     if (request.method == 'POST'):
         response = customerUI.sendRequest(vid, request.form['firstName'], request.form['lastName'], request.form['email'], request.form['requestType'], request.form['custom-message'])
+        flash("Request Successfully Sent")
         return redirect("/inventory/vehicle/"+vid)
+    flash("Error: Something went wrong")
     return redirect("/inventory/vehicle/"+vid)
 
 
@@ -311,8 +346,10 @@ def submitCustomerInfo(id, token):
 def submitVehicleEdits(vid):
     if (request.method == 'POST'):
         adminUI.submitVehicleUpdates(vid, request.form)
+        flash("Updates Successfully Registered")
         return redirect(url_for("updateInventory"))
-    return '', 400
+    flash("Error: Failed to register updates")
+    return redirect("/admin/inventory/update/"+vid)
 
 if __name__ == "__main__": 
     app.secret_key = "AIzaSyBrZVMANrVDDLuqYJktyTDolrDsSDNyZHc"

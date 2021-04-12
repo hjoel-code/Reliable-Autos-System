@@ -65,7 +65,6 @@
                                     <option>any</option>
                                     <option value="Toyota">Toyota</option>
                                     <option value="Nissan">Nissan</option>
-                                    <option value="Suzuki">Suzuki</option>
                                     <option value="Hyundai">Hyundai</option>
                                     <option value="Subaru">Subaru</option>
                                 </select>
@@ -84,6 +83,9 @@
                                     <label class="filter-label"><small>Type</small></label>
                                     <select name="bType" class="form-control" id="search-body-style" style="margin: 5px;">
                                         <option>any</option>
+                                        <option value="Sedan">Sedan</option>
+                                        <option value="SUV">SUV</option>
+                                        <option value="Truck">Truck</option>
                                     </select>
                                 </div>
                                 <div class="col-6 px-1">
@@ -204,6 +206,38 @@
 
     <script>
         yall()
+
+        var makes = [{
+            make: 'Nissan',
+            models: ['Sylphy', 'Note', 'Skyline', 'Lafesta', 'Cube']
+        },{
+            make: 'Toyota',
+            models: ['Voxy', 'Axio', 'Fielder']
+        },{
+            make: 'Subaru',
+            models: ['Impreza', 'Outback']
+        }, {
+            make: 'Hyundai',
+            models: ['Accent']
+        }]
+
+        function setModels(make_select) {
+            var model_elm = document.getElementById('search-model')
+            model_elm.innerHTML = "<option>any</option>"
+            
+                                    
+            makes.forEach(make => {
+                if (make_select === make.make) {
+                    make.models.forEach(model => {
+                        model_elm.innerHTML += '<option value="'+model+'">'+model+'</option>'
+                    })
+                }
+            })
+        }
+
+        document.getElementById('search-make').addEventListener('change', (e) => {
+            setModels($("#search-make").val())
+        }, false)
     </script>
 </body>
 

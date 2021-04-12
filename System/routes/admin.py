@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, make_response, Blueprint
-from ..system import pdfkit, adminUI, auth
+from ..model import pdfkit, adminUI, auth
 
 
 admin = Blueprint('admin', __name__, template_folder='templates', static_folder='static')

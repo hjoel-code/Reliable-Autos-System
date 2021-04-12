@@ -6,7 +6,7 @@ from flask import Flask
 
 
 # Firebase Admin Configuration
-cred = credentials.Certificate('./Reliable-Autos-System/reliable-autos-firebase-adminsdk-ogsma-8b54558a09.json')
+cred = credentials.Certificate('./reliable-autos-firebase-adminsdk-ogsma-8b54558a09.json')
 default_app = firebase_admin.initialize_app(cred)
 
 

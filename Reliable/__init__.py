@@ -7,8 +7,8 @@ from config import app
 from .packages import adminUI, customerUI, auth
 
 # BLUEPRINTS
-from .views.admin import admin
-from .views.customer import customer
+from .routes.admin import admin
+from .routes.customer import customer
 
 
 dropzone = Dropzone(app)

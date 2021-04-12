@@ -30,5 +30,5 @@ firebase = pyrebase.initialize_app(config)
 app = Flask(__name__)
 app.config.update(
     DEBUG=True,
-    SECRET_KEY=b"AIzaSyBrZVMANrVDDLuqYJktyTDolrDsSDNyZHc"
+    SECRET_KEY=b"RELIABLE000SYS0012"
 )

@@ -1,9 +1,18 @@
 # Reliable-Autos-System
 
-### Before running the system please ensure you have the following installed on your device.
+### Before running the system please ensure you have the following dependencies installed to your device.
+* Flask Framework
+	- To install, run `pip install Flask`
+* Flask Dropzone
+	- To install, run `pip install Flask-Dropzone`
 * Firebase 
-	- to install, go to View in  Visual Code Studio, select extensions and enter firebase in the search bar, then install fire database.
-	- to install, run `pip3 install firebase-admin` inside a terminal window.
+	- To install, run `pip3 install firebase-admin` 
+* Pyrebase
+	- To install, run `pip3 install Pryebase`
+* PDFkit
+	- To install, run `pip3 install pdfkit`
+
+
 
 ### Authors 
 * Joel Henry

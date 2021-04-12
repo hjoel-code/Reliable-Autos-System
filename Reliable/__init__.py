@@ -4,7 +4,7 @@ from flask_dropzone import Dropzone
 
 # INTERNAL IMPORTS
 from config import app
-from .packages import adminUI, customerUI, auth
+from .system import adminUI, customerUI, auth
 
 # BLUEPRINTS
 from .routes.admin import admin

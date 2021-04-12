@@ -60,9 +60,6 @@ class AdminUI(UI):
 
     def viewRequest(self, id):
         return self.request.getRequest(id)
-
-    def filterRequest(self):
-        pass
     
     def addInvoice(self, request):
         return self.invoice.addInvoice(request)
@@ -99,9 +96,7 @@ class AdminUI(UI):
         return self.auth.signUpUser(firstName, lastName, email, password)
 
     def submitVehicleUpdates(self, vid, updates):
-        print(updates)
         for key, update in updates.items():
-            print(key, update)
             if update != "":
                 self.inventory.updateVehicleField(vid, key, update)
 

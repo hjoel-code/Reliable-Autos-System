@@ -14,7 +14,7 @@
 <body>
     <div class="main-bg"></div>
     <div class="container-fluid">
-        <a class="btn back-btn mr-auto" href="{{ url_for('signout') }}">
+        <a class="btn back-btn mr-auto" href="{{ url_for('admin.signout') }}">
             <span><i class="fa fa-sign-out"></i></span> Sign Out
         </a>
         <div class="login-column">
@@ -26,13 +26,13 @@
                     <div class="menu-head">Hello {{ name }}</div>
                         <div class="menu-item menu-dropdown" data-toggle="collapse" data-target="#updates-menu"> Update Inventory
                             <div class="dropdown-menu-ra collapse pt-2" id="updates-menu">
-                                <a href="{{ url_for('addVehicle') }}" class="menu-item drop">Add to Inventory</a>
-                                <a href="{{ url_for('updateInventory') }}"  class="menu-item drop">Edit Vehicle Information</a>
+                                <a href="{{ url_for('admin.addVehicle') }}" class="menu-item drop">Add to Inventory</a>
+                                <a href="{{ url_for('admin.updateInventory') }}"  class="menu-item drop">Edit Vehicle Information</a>
                             </div>
                         </div>
-                        <a href="{{ url_for('viewRequest') }}" class="menu-item">Manage Requests</a>
-                        <a href="{{ url_for('viewInvoices') }}" class="menu-item">Manage Invoices</a>
-                        <a href="{{ url_for('signUp') }}" class="menu-item">Add Administrator</a>
+                        <a href="{{ url_for('admin.viewRequest') }}" class="menu-item">Manage Requests</a>
+                        <a href="{{ url_for('admin.viewInvoices') }}" class="menu-item">Manage Invoices</a>
+                        <a href="{{ url_for('admin.signUp') }}" class="menu-item">Add Administrator</a>
                     </div>
                 </div>
             </div>

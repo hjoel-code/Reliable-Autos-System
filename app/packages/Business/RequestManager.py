@@ -1,7 +1,7 @@
-from Persistence.DatabaseManager import DatabaseManager
-from Business.InventoryManager import InventoryManager
-from Business.Request import Request
-from Business.Customer import Customer
+from ..Persistence.DatabaseManager import DatabaseManager
+from .InventoryManager import InventoryManager
+from .Request import Request
+from .Customer import Customer
 
 
 class RequestManager:

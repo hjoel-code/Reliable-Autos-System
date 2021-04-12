@@ -1,8 +1,6 @@
-from Persistence.DatabaseManager import DatabaseManager
-from Business.Vehicle import Vehicle
-from Business.Invoice import Invoice
-from firebase_admin import firestore
-
+from ..Persistence.DatabaseManager import DatabaseManager, firestore
+from .Vehicle import Vehicle
+from .Invoice import Invoice
 
 class InvoiceManager:
 

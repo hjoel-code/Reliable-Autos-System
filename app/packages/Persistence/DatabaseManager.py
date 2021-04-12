@@ -1,25 +1,4 @@
-import firebase_admin
-from firebase_admin import credentials, firestore, storage
-
-
-
-import pyrebase
-
-cred = credentials.Certificate('./Reliable-Autos-System/javvy-autozone-firebase-adminsdk-ogsma-8b54558a09.json')
-default_app = firebase_admin.initialize_app(cred)
-
-config = {
-    "apiKey": "AIzaSyBrZVMANrVDDLuqYJktyTDolrDsSDNyZHc",
-    "authDomain": "javvy-autozone.firebaseapp.com",
-    "databaseURL": "https://javvy-autozone.firebaseio.com",
-    "projectId": "javvy-autozone",
-    "storageBucket": "javvy-autozone.appspot.com",
-    "messagingSenderId": "856400598410",
-    "appId": "1:856400598410:web:05da134896fd41c386a473",
-    "measurementId": "G-BGF0C71YEL"
-  }
-
-firebase = pyrebase.initialize_app(config)
+from config import firebase, firestore
 
 
 class DatabaseManager:
@@ -174,7 +153,6 @@ class DatabaseManager:
             response['status'] = True
         except Excepton as error:
             print(error)
-
         return response
 
 

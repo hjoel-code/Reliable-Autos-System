@@ -1,4 +1,4 @@
-from Business.Address import Address
+from .Address import Address
 
 class Customer:
     #Constructor to initialise customer

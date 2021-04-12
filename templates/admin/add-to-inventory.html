@@ -14,7 +14,7 @@
 <body>
     <div class="main-bg"></div>
     <div class="container-fluid">
-        <a class="btn back-btn mr-auto" href="{{ url_for('adminMenu') }}">
+        <a class="btn back-btn mr-auto" href="{{ url_for('admin.adminMenu') }}">
             <span><i class="fa fa-arrow-left"></i></span> Go Back
         </a>
         <div class="login-column">
@@ -24,7 +24,7 @@
                 </div>
                 <div class="menu">
                     <div class="menu-body px-5">
-                        <form id="add-vehicle" action="{{ url_for('addVehicleAction') }}" method="POST">
+                        <form id="add-vehicle" action="{{ url_for('admin.addVehicleAction') }}" method="POST">
                             <div class="row mb-2">
                                 <div class="col-md-6">
                                     <div class="form-group p-0">

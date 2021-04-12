@@ -1,6 +1,5 @@
-from Persistence.DatabaseManager import DatabaseManager
-from Business.Vehicle import Vehicle
-from firebase_admin import firestore
+from ..Persistence.DatabaseManager import DatabaseManager, firestore
+from .Vehicle import Vehicle
 
 
 
@@ -19,7 +18,7 @@ class InventoryManager:
     def addImagesToVehicle(self, vid, imgSrc, imgDes):
         image = self.db.storeFile(imgSrc, imgDes)
         if (image['status']):
-            response = self.db.update(vid, {u'images': firestore.ArrayUnion([u''+ image['data']])})
+            response = self.db.update(vid, {u'images': firestore.ArrayUnion([u''+ image['data']])}) 
             return True
         return False
 
@@ -27,7 +26,6 @@ class InventoryManager:
         self.db.resetQuery()
         if (self.isPublic):
             self.addFilter('vehicleStatus','==','Available')
-        
 
     def addFilter(self, field, operator, value):
         if (value != ""):

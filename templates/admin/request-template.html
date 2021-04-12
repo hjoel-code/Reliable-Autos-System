@@ -14,7 +14,7 @@
 <body>
     <div class="main-bg"></div>
     <div class="container-fluid">
-        <a class="btn back-btn mr-auto" href="{{ url_for('viewRequest') }}">
+        <a class="btn back-btn mr-auto" href="{{ url_for('admin.viewRequest') }}">
             <span><i class="fa fa-arrow-left"></i></span> Go Back
         </a>
         <div class="login-column">
@@ -80,8 +80,6 @@
                                         {% else %}
                                             <a href="/admin/invoice-details/{{ request.invoice }}">{{ request.invoice }}</a>
                                         {% endif %}
-                                    {% elif request.requestType == "moreinfo" %}
-                                    <a class="btn btn-sm btn-secondary" href="#">Generate Vehicle Document</a>
                                     {% else %}
                                     <a class="btn btn-sm btn-secondary" href="#"><small>Respond by Email</small></a>
                                     {% endif %}

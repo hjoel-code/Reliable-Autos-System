@@ -1,23 +1,7 @@
-from Persistence.DatabaseManager import DatabaseManager
-import pyrebase
-import urllib.request
-from urllib.error import HTTPError
-
-config = {
-    "apiKey": "AIzaSyBrZVMANrVDDLuqYJktyTDolrDsSDNyZHc",
-    "authDomain": "javvy-autozone.firebaseapp.com",
-    "databaseURL": "https://javvy-autozone.firebaseio.com",
-    "projectId": "javvy-autozone",
-    "storageBucket": "javvy-autozone.appspot.com",
-    "messagingSenderId": "856400598410",
-    "appId": "1:856400598410:web:05da134896fd41c386a473",
-    "measurementId": "G-BGF0C71YEL"
-  }
-
-firebase = pyrebase.initialize_app(config)
+from config import firebase
+from ..Persistence.DatabaseManager import DatabaseManager
 
 class User:
-
     def __init__(self, fname = '', lname = '', uid = ''):
         self.fname = fname
         self.lname = lname
@@ -30,7 +14,6 @@ class User:
         self.fname = doc['fname']
         self.lname = doc['lname']
         self.uid = doc['uid']
-
 
 class Authentication:
     def __init__(self):

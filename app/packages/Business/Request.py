@@ -1,7 +1,7 @@
 import enum
 from datetime import datetime
-from Business.Vehicle import Vehicle
-from Business.Customer import Customer 
+from .Vehicle import Vehicle
+from .Customer import Customer 
 
 import random
 

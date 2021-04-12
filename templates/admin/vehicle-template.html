@@ -14,7 +14,7 @@
 <body>
     <div class="main-bg"></div>
     <div class="container-fluid">
-        <a class="btn back-btn mr-auto" href="{{ url_for('updateInventory') }}">
+        <a class="btn back-btn mr-auto" href="{{ url_for('admin.updateInventory') }}">
             <span><i class="fa fa-arrow-left"></i></span> Go Back
         </a>
         <div class="login-column">
@@ -169,7 +169,7 @@
 
                             <div class="my-5 ml-5">
                                 <button class="btn btn-success mx-1" type="submit">Save Changes</button>
-                                <a href="{{ url_for('updateInventory') }}" class="btn btn-secondary mx-1">Cancel</a>
+                                <a href="{{ url_for('admin.updateInventory') }}" class="btn btn-secondary mx-1">Cancel</a>
                             </div>
                         </form>
                         

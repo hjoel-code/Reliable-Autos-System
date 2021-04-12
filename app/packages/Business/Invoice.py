@@ -1,7 +1,8 @@
+from .Vehicle import Vehicle
+from .Customer import Customer 
+
 from datetime import datetime
 import random
-from Business.Vehicle import Vehicle
-from Business.Customer import Customer 
 
 class Discount:
     def __init__(self, title, amount):

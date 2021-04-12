@@ -1,8 +1,8 @@
-from Business.InventoryManager import InventoryManager
-from Business.RequestManager import RequestManager
-from Business.InvoiceManager import InvoiceManager
-from Security.Authentication import Authentication
-from Persistence.DatabaseManager import DatabaseManager
+from ..Business.InventoryManager import InventoryManager
+from ..Business.RequestManager import RequestManager
+from ..Business.InvoiceManager import InvoiceManager
+from ..Security.Authentication import Authentication
+from ..Persistence.DatabaseManager import DatabaseManager
 
 from random import randint
 
